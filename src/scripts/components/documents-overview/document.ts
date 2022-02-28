@@ -274,7 +274,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
 
     updateDomElement(renderInfo: OverviewRenderInfo) {
         this.domElement.append(new ElementBuilder('div')
-            .withStyleClasses('document')
+            .withStyleClasses('badged-card', 'document')
             .withChildren(
                 new ElementBuilder('div')
                     .withStyleClasses('badge-holder')
@@ -286,7 +286,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
                             .build(),
                         new ElementBuilder('a')
                             // The second badge is the download button for the document.
-                            .withStyleClasses('badge', 'material-icons', 'download-icon')
+                            .withStyleClasses('badge', 'material-icons', 'clickable')
                             .withText(this.documentActionIcon)
                             // Open the link in a new tab.
                             .withAttribute('target', '_blank')

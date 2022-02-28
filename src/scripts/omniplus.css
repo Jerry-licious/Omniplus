@@ -2,8 +2,10 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 @import "overview.css";
+@import "forum.css";
 
 /* Define the colours here. */
+/* Source: https://material.io/resources/color/ */
 body {
     /* Lea Green */
     --primary: #8bc34a;
@@ -24,9 +26,15 @@ body {
     --dark-red: #300000;
 
     /* Greyscales */
+    --grey-100: #f5f5f5;
+    --grey-200: #eeeeee;
+    --grey-300: #e0e0e0;
     --grey-400: #bdbdbd;
     --grey-500: #9e9e9e;
     --grey-600: #757575;
+    --grey-700: #616161;
+    --grey-800: #424242;
+    --grey-900: #212121;
 }
 
 /* Container for all Lea content injections. */
@@ -40,4 +48,95 @@ body {
 
     /* Roboto */
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.omniplus-documents-overview .badged-card {
+    /* Horizontal Flexbox */
+    display: flex;
+    /* Reverse the order to put the icons on the right and the card itself on the left.
+     This is done instead of reversing the order of the elements so the card is always
+     above the badges without having to specify indixes. */
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    --badge-size: 36px;
+    --badge-background: var(--primary);
+    --badge-background-hovered: var(--primary-dark);
+    --badge-background-focused: var(--primary-darker);
+}
+
+.omniplus-documents-overview .badged-card .badge-holder {
+    /* Prevent the badges from being squished by the description. */
+    flex-shrink: 0;
+
+    width: var(--badge-size);
+    /* Give the badges a bit of space vertically. */
+    /* Also to match the padding of the card's content. */
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    /* Vertical Flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    /* Give the badges a bit of space from each other. */
+    gap: 8px;
+}
+
+.omniplus-documents-overview .badged-card .badge-holder .badge {
+    height: var(--badge-size);
+
+    /* Rounded corners on top and bottom left. */
+    /* border-radius: 2px 0 0 2px; */
+    border-radius: 0 2px 2px 0;
+
+    /* Centre-align horizontally */
+    text-align: center;
+    /* Using flexbox to centre-align vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* icon size and colour */
+    color: white;
+    font-size: calc(var(--badge-size) * 0.67);
+
+    text-decoration: none !important;
+}
+
+
+.omniplus-documents-overview .badged-card .badge-holder .clickable {
+    /* Pointer indicating that the file can be downloaded. */
+    cursor: pointer;
+    background-color: var(--badge-background);
+
+    transition-duration: 0.2s;
+}
+.omniplus-documents-overview .badged-card .badge-holder .clickable:hover {
+    background-color: var(--badge-background-hovered);
+}
+.omniplus-documents-overview .badged-card .badge-holder .clickable:focus {
+    background-color: var(--badge-background-focused);
+}
+
+.omniplus-documents-overview .badged-card .card {
+    /* The card fills the horizontal content. */
+    flex-grow: 1;
+    border-radius: 2px;
+    /* Material 2dp shadow */
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+
+    padding: 12px;
+
+    /* Vertical Flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    /* Added space between title and descriptions. */
+    gap: 8px;
 }

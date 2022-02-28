@@ -209,56 +209,6 @@
     /* Auto-size */
     width: auto;
     height: auto;
-
-    /* Horizontal Flexbox */
-    display: flex;
-    /* Reverse the order to put the icons on the right and the card itself on the left.
-     This is done instead of reversing the order of the elements so the card is always
-     above the badges without having to specify indixes. */
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    align-items: stretch;
-
-    --badge-size: 36px;
-}
-
-.omniplus-documents-overview .document .badge-holder {
-    /* Prevent the badges from being squished by the description. */
-    flex-shrink: 0;
-
-    width: var(--badge-size);
-    /* Give the badges a bit of space vertically. */
-    /* Also to match the padding of the card's content. */
-    margin-top: 12px;
-    margin-bottom: 12px;
-
-    /* Vertical Flexbox */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-
-    /* Give the badges a bit of space from each other. */
-    gap: 8px;
-}
-
-.omniplus-documents-overview .document .badge-holder .badge {
-    height: var(--badge-size);
-
-    /* Rounded corners on top and bottom left. */
-    /* border-radius: 2px 0 0 2px; */
-    border-radius: 0 2px 2px 0;
-
-    /* Centre-align horizontally */
-    text-align: center;
-    /* Using flexbox to centre-align vertically */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    /* icon size and colour */
-    color: white;
-    font-size: calc(var(--badge-size) * 0.67);
 }
 
 .omniplus-documents-overview .document .badge-holder .file-background {
@@ -269,40 +219,6 @@
 }
 .omniplus-documents-overview .document .badge-holder .video-background {
     background-color: var(--dark-red);
-}
-
-
-.omniplus-documents-overview .document .badge-holder .download-icon {
-    /* Pointer indicating that the file can be downloaded. */
-    cursor: pointer;
-    background-color: var(--primary);
-
-    transition-duration: 0.2s;
-}
-.omniplus-documents-overview .document .badge-holder .download-icon:hover {
-    background-color: var(--primary-dark);
-}
-.omniplus-documents-overview .document .badge-holder .download-icon:focus {
-    background-color: var(--primary-darker);
-}
-
-.omniplus-documents-overview .document .card {
-    /* The card fills the horizontal content. */
-    flex-grow: 1;
-    border-radius: 2px;
-    /* Material 2dp shadow */
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-
-    padding: 12px;
-
-    /* Vertical Flexbox */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-
-    /* Added space between title and descriptions. */
-    gap: 8px;
 }
 
 .omniplus-documents-overview .document .card .name {
@@ -318,7 +234,7 @@
     font-weight: 400;
 }
 
-.omniplus-documents-overview .document .card .description {
+.omniplus-documents-overview .badged-card .card .description {
     font-size: 16px;
     color: rgba(0, 0, 0, 0.6);
 
