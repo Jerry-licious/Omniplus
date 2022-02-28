@@ -37,4 +37,7 @@ body {
     height: calc(100vh - 120px);
     /* Leave space for the left lea toolbar */
     max-width: calc(100vw - 400px);
+
+    /* Roboto */
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
