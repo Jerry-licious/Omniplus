@@ -50,7 +50,7 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
-.omniplus-documents-overview .badged-card {
+.omniplus-lea-container .badged-card {
     /* Horizontal Flexbox */
     display: flex;
     /* Reverse the order to put the icons on the right and the card itself on the left.
@@ -66,7 +66,7 @@ body {
     --badge-background-focused: var(--primary-darker);
 }
 
-.omniplus-documents-overview .badged-card .badge-holder {
+.omniplus-lea-container .badged-card .badge-holder {
     /* Prevent the badges from being squished by the description. */
     flex-shrink: 0;
 
@@ -86,7 +86,7 @@ body {
     gap: 8px;
 }
 
-.omniplus-documents-overview .badged-card .badge-holder .badge {
+.omniplus-lea-container .badged-card .badge-holder .badge {
     height: var(--badge-size);
 
     /* Rounded corners on top and bottom left. */
@@ -108,21 +108,21 @@ body {
 }
 
 
-.omniplus-documents-overview .badged-card .badge-holder .clickable {
+.omniplus-lea-container .badged-card .badge-holder .clickable {
     /* Pointer indicating that the file can be downloaded. */
     cursor: pointer;
     background-color: var(--badge-background);
 
     transition-duration: 0.2s;
 }
-.omniplus-documents-overview .badged-card .badge-holder .clickable:hover {
+.omniplus-lea-container .badged-card .badge-holder .clickable:hover {
     background-color: var(--badge-background-hovered);
 }
-.omniplus-documents-overview .badged-card .badge-holder .clickable:focus {
+.omniplus-lea-container .badged-card .badge-holder .clickable:focus {
     background-color: var(--badge-background-focused);
 }
 
-.omniplus-documents-overview .badged-card .card {
+.omniplus-lea-container .badged-card .card {
     /* The card fills the horizontal content. */
     flex-grow: 1;
     border-radius: 2px;
