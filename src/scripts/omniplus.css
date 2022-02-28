@@ -27,14 +27,17 @@ body {
     --grey-600: #757575;
 }
 
-.omniplus-documents-overview {
+/* Container for all Lea content injections. */
+.omniplus-lea-container {
     padding: 20px;
 
     /* Since the body scroll is disabled, ensure that the container is in the screen so its horizontal scroll bar shows up. */
     height: calc(100vh - 120px);
     /* Leave space for the left lea toolbar */
     max-width: calc(100vw - 400px);
+}
 
+.omniplus-documents-overview {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

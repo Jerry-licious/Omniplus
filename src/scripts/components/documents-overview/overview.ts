@@ -8,7 +8,7 @@ export class LeaDocumentsOverview extends Renderable<OverviewRenderInfo> {
     container: LeaDocumentsContainer;
 
     constructor(documentsContainer: LeaDocumentsContainer) {
-        super('div', 'omniplus-documents-overview');
+        super('div', 'omniplus-documents-overview', 'omniplus-lea-container');
 
         this.container = documentsContainer;
     }
