@@ -1,0 +1,19 @@
+# Changelog
+
+## [0.2.1] - 2022-02-28
+
+#### Bug Fixes
+
+- Fixed a bug where link documents do not have their URLs loaded properly on Chrome.
+
+
+## [0.2] - 2022-02-27
+
+#### Bug Fixes
+
+- Fixed a bug where the Omniplus flower logo does not get used properly on Chrome.
+
+
+## [0.1] - 2022-02-27
+
+Initial release. 
