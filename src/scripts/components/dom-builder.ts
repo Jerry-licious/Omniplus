@@ -1,7 +1,7 @@
 export class ElementBuilder {
     tag: string;
     styleClasses: string[] = [];
-    children: HTMLElement[] = [];
+    children: Node[] = [];
     text: string = "";
     attributes: Map<string, string> = new Map<string, string>();
     styleRules: Map<string, string> = new Map<string, string>();
@@ -18,7 +18,7 @@ export class ElementBuilder {
         return this;
     }
 
-    withChildren(...children: HTMLElement[]): ElementBuilder {
+    withChildren(...children: Node[]): ElementBuilder {
         children.forEach((child) => this.children.push(child));
         return this;
     }
