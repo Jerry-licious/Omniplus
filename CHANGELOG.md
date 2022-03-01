@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1] - 2022-03-01
+
+#### Features
+
+- Button to scroll to top and bottom in class forums.
+- Button to expand and collapse all comments in class forums.
+
 ## [0.3] - 2022-02-28
 
 #### Features

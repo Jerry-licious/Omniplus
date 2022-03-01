@@ -8,6 +8,8 @@
     /* Space between the posts */
     gap: 20px;
 
+    overflow-y: scroll;
+
     user-select: none;
 }
 
@@ -57,4 +59,66 @@
     --badge-clickable-background: var(--secondary);
     --badge-clickable-background-hovered: var(--secondary-dark);
     --badge-clickable-background-focused: var(--secondary-darker);
+}
+
+.omniplus-forum-subject .controls {
+    position: absolute;
+    z-index: 99;
+    /* Align this to the right */
+    align-self: end;
+
+    /* Vertical flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 12px;
+
+    --button-size: 48px;
+}
+
+.omniplus-forum-subject .controls .button {
+    height: var(--button-size);
+    width: var(--button-size);
+
+    border-radius: 4px;
+    /* Material 2dp shadow */
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+
+    /* Centre-align horizontally */
+    text-align: center;
+    /* Using flexbox to centre-align vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* icon size and colour */
+    color: white;
+    font-size: calc(var(--button-size) * 0.67);
+
+    text-decoration: none !important;
+
+    /* Pointer indicating that the file can be downloaded. */
+    cursor: pointer;
+    background-color: var(--button-clickable-background);
+
+    transition-duration: 0.2s;
+}
+.omniplus-forum-subject .controls .button:hover {
+    background-color: var(--button-clickable-background-hovered);
+}
+.omniplus-forum-subject .controls .button:focus {
+    background-color: var(--button-clickable-background-focused);
+}
+
+.omniplus-forum-subject .controls .primary {
+    --button-clickable-background: var(--primary);
+    --button-clickable-background-hovered: var(--primary-dark);
+    --button-clickable-background-focused: var(--primary-darker);
+}
+.omniplus-forum-subject .controls .secondary {
+    --button-clickable-background: var(--secondary);
+    --button-clickable-background-hovered: var(--secondary-dark);
+    --button-clickable-background-focused: var(--secondary-darker);
 }
