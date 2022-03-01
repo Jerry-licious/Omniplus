@@ -17,6 +17,7 @@ body {
     --secondary: #0288d1;
     --secondary-light: #5eb8ff;
     --secondary-dark: #005b9f;
+    --secondary-darker: #003270;
 
     /* Dark grey, used to indicate the file document type. */
     --dark-grey: #1b1b1b;
