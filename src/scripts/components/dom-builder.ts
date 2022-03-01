@@ -7,6 +7,8 @@ export class ElementBuilder {
     styleRules: Map<string, string> = new Map<string, string>();
     eventListeners: Map<string, EventListener> = new Map<string, EventListener>();
 
+    innerHTML: string;
+
     constructor(tag: string) {
         this.tag = tag;
     }
@@ -41,10 +43,19 @@ export class ElementBuilder {
         return this;
     }
 
+    withInnerHTML(html: string): ElementBuilder {
+        this.innerHTML = html;
+        return this;
+    }
+
     build(): HTMLElement {
         const element = document.createElement(this.tag);
         this.styleClasses.forEach((styleClass) => element.classList.add(styleClass));
         this.children.forEach((child) => element.appendChild(child));
+
+        if (this.innerHTML) {
+            element.innerHTML = this.innerHTML;
+        }
 
         if (this.text.length > 0) {
             element.appendChild(document.createTextNode(this.text));
