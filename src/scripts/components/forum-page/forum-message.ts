@@ -1,13 +1,40 @@
-export class ForumMessage {
+// Represents a message within a forum post.
+import {Renderable} from '../renderable';
+import {ElementBuilder} from '../dom-builder';
+
+export class ForumMessage extends Renderable<null> {
     // When the forum is posted.
     postTime: Date;
     author: string;
     content: string;
+    // The href of the anchor that allows you to quote the message.
+    quoteAction: string;
 
-    constructor(postTime: Date, author: string, content: string) {
+    contentExceedsHeight = false;
+    expanded: boolean = false;
+
+    constructor(postTime: Date, author: string, content: string, quoteAction: string) {
+        super('div', 'badged-card', 'message');
+
         this.postTime = postTime;
         this.author = author;
         this.content = content;
+        this.quoteAction = quoteAction;
+
+
+        const contentElement = new ElementBuilder('div')
+            .withStyleClasses('content')
+            .withInnerHTML(this.content)
+            .build();
+
+        // Add the element to the document so the height can be measured.
+        document.body.appendChild(contentElement);
+        // Cap content height at 200px.
+        if (!this.expanded && contentElement.clientHeight > 200) {
+            this.contentExceedsHeight = true;
+        }
+        // Get rid of it after.
+        document.body.removeChild(contentElement);
     }
 
     // Forum messages are not grouped together under common elements per message. Instead a list of table rows are
@@ -26,7 +53,11 @@ export class ForumMessage {
         // Not confusing at all, right?
         const messageHTML = messageElement.querySelector('.Msg').firstElementChild.innerHTML;
 
-        return new ForumMessage(postTime, author, messageHTML);
+        // The reply button is stored in the anchor element in the message section in an element with the class
+        // .liensMsg.
+        const quoteAction = (<HTMLAnchorElement>messageElement.querySelector('.liensMsg a')).href;
+
+        return new ForumMessage(postTime, author, messageHTML, quoteAction);
     }
 
     // Extracts the time when the message was posted from its time string.
@@ -62,5 +93,96 @@ export class ForumMessage {
         // Iterate through both at the same time.
         return Array.from(timeElements).map((timeElement, index) => ForumMessage.fromPostElements(
             <HTMLTableRowElement>timeElement, <HTMLTableRowElement>messageElements[index]));
+    }
+
+    // Formatted post time.
+    get formattedTime(): string {
+        // The date string has the following format:
+        // Weekday Month Date Year
+        // We desire the following format:
+        // Month Date, Year
+        const dateStringParts = this.postTime.toDateString().split(' ');
+        // The time string has the following format:
+        // HH:MM:SS GMT-NNNN (Time Zone Name)
+        // We desire the following format:
+        // HH:MM
+        // To obtain the parts, first split by space, then by colon.
+        const timeStringParts = this.postTime.toTimeString().split(' ')[0].split(':');
+
+
+        return `${timeStringParts[0]}:${timeStringParts[1]} ${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[3]}`;
+    }
+
+    get contentElement(): HTMLElement {
+        const element = new ElementBuilder('div')
+            .withStyleClasses('content')
+            .withInnerHTML(this.content)
+            .build();
+
+        // Shorten if the content exceeds the height limit and the current message has not been expanded.
+        if (!this.expanded && this.contentExceedsHeight) {
+            element.classList.add('shortened');
+        }
+
+        return element;
+    }
+
+    get expandButton(): HTMLElement {
+        return new ElementBuilder('a')
+            .withStyleClasses('badge', 'material-icons', 'clickable', 'expand')
+            // Unfocus after click.
+            .withEventListener('click', event => (<HTMLAnchorElement>event.target).blur())
+            .withEventListener('click', () => {
+                // Invert the state
+                this.expanded = !this.expanded;
+
+                // And call for a rerender.
+                this.render();
+            })
+            // Change icon based on whether the element has been expanded or not.
+            .withText(this.expanded ? 'expand_less' : 'expand_more')
+            .build();
+    }
+
+    updateDomElement() {
+        this.domElement.append(
+            new ElementBuilder('div')
+                .withStyleClasses('badge-holder')
+                .withChildren(
+                    new ElementBuilder('a')
+                        .withStyleClasses('badge', 'material-icons', 'clickable')
+                        .withAttribute('href', this.quoteAction)
+                        // Unfocus after click.
+                        .withEventListener('click', event => (<HTMLAnchorElement>event.target).blur())
+                        .withText('format_quote')
+                        .build(),
+                    // Add the expand button if the content exceeds the height limit.
+                    ... this.contentExceedsHeight ? [this.expandButton] : []
+                )
+                .build(),
+            new ElementBuilder('div')
+                .withStyleClasses('card')
+                .withChildren(
+                    new ElementBuilder('div')
+                        .withStyleClasses('header')
+                        .withChildren(
+                            // Boldface the author name.
+                            new ElementBuilder('b')
+                                .withStyleClasses('author')
+                                .withText(this.author)
+                                .build(),
+                            new ElementBuilder('span')
+                                .withStyleClasses('filler')
+                                .build(),
+                            new ElementBuilder('span')
+                                .withStyleClasses('time')
+                                .withText(this.formattedTime)
+                                .build()
+                        )
+                        .build(),
+                    this.contentElement
+                )
+                .build()
+        );
     }
 }

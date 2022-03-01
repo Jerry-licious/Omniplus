@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3] - 2022-02-28
+
+#### Features
+
+- Cleaner Lea forum posts with bigger text and a modern style.
+    - Forum post lengths are capped to reduce scrolling, click on the expand button to read more.
+
+
 ## [0.2.1] - 2022-02-28
 
 #### Bug Fixes

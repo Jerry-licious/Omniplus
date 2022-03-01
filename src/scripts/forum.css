@@ -1,0 +1,60 @@
+.omniplus-forum-subject {
+    /* Vertical flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* Space between the posts */
+    gap: 20px;
+
+    user-select: none;
+}
+
+
+.omniplus-forum-subject .message {
+    /* Prevent the messages from being squished when the page overflows. */
+    flex-shrink: 0;
+    height: auto;
+    /* A few sources suggest that the width of each line should not exceed 75 characters.
+    With the padding this limit will be a bit shorter. */
+    font-size: 16px;
+    line-height: 20px;
+    max-width: 75ex;
+}
+
+.omniplus-forum-subject .message .card .header {
+    /* Horizontal flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.omniplus-forum-subject .message .card .header .filler {
+    /* Make the filler fill the space and push the time to the right. */
+    flex-grow: 1;
+}
+.omniplus-forum-subject .message .card .header .author {
+    /* Prevent from getting squished. */
+    flex-shrink: 0;
+}
+.omniplus-forum-subject .message .card .header .time {
+    /* Prevent from getting squished. */
+    flex-shrink: 0;
+    color: var(--grey-700);
+
+    /* Put the fonts on a smaller size */
+    font-size: 14px;
+}
+
+.omniplus-forum-subject .message .card .shortened {
+    max-height: 200px;
+    overflow: hidden;
+}
+
+/* Give the expand button the secondary colour so it doesn't look too similar. */
+.omniplus-forum-subject .badged-card .badge-holder .expand {
+    --badge-clickable-background: var(--secondary);
+    --badge-clickable-background-hovered: var(--secondary-dark);
+    --badge-clickable-background-focused: var(--secondary-darker);
+}
