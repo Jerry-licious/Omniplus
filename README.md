@@ -13,8 +13,13 @@ content differently.
 - Added a button on Lea for you to quickly access the documents overview page.
 - Cleaner Lea forum posts with bigger text and a modern style.
   - Forum post lengths are capped to reduce scrolling, click on the expand button to read more. 
+  - Consistent formatting and font usage are enforced.
+    - All fonts are converted to their corresponding category of Roboto fonts.
+    - All texts are now sized 16px for consistent flow.
+  - Block quotes now have a more modern look.
+  - Added a small control panel to change the flow of a forum subject.
     - Click on a button to expand or collapse all messages.
-  - Scroll to the bottom and back to the top at the click of a button.
+    - Shortcut button for scrolling to the top and bottom.
 - General renovations to Omnivox pages.
     - The image header that takes up space is now removed.
 - The Omnivox flower now has an extra petal.

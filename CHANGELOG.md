@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.2] - 2022-03-01
+
+#### Changes
+
+- Lea forum posts are now reformatted to have consistent font size and font families.
+  - All usage of Sans Serif fonts are converted to Roboto; all usage of Serif fonts are converted to Roboto Serif; 
+    all usage of Courier New are converted to Roboto Mono.
+  - All text now have 16px font size.
+- Lea forum posts now have better formatting for quotation blocks. 
+
+#### Bug Fixes
+
+- Added the reply to subject button to the control panel of forum pages. 
+
 ## [0.3.1] - 2022-03-01
 
 #### Features
