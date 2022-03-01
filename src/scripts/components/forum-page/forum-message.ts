@@ -1,30 +1,33 @@
 // Represents a message within a forum post.
 import {Renderable} from '../renderable';
 import {ElementBuilder} from '../dom-builder';
+import {FormattedText} from './formatted-text';
 
 export class ForumMessage extends Renderable<null> {
     // When the forum is posted.
     postTime: Date;
     author: string;
-    content: string;
+    content: FormattedText;
     // The href of the anchor that allows you to quote the message.
     quoteAction: string;
 
     contentExceedsHeight = false;
     expanded: boolean = false;
 
-    constructor(postTime: Date, author: string, content: string, quoteAction: string) {
+    constructor(postTime: Date, author: string, originalContentElement: Element, quoteAction: string) {
         super('div', 'badged-card', 'message');
 
         this.postTime = postTime;
         this.author = author;
-        this.content = content;
+        this.content = FormattedText.fromContentNode(originalContentElement);
         this.quoteAction = quoteAction;
 
 
         const contentElement = new ElementBuilder('div')
             .withStyleClasses('content')
-            .withInnerHTML(this.content)
+            .withChildren(
+                this.content.render()
+            )
             .build();
 
         // Add the element to the document so the height can be measured.
@@ -51,13 +54,13 @@ export class ForumMessage extends Renderable<null> {
         // The actual message of the message is stored in an element with the class .Msg inside the message element
         // alongside a "quote" button. Choosing the first child to select the message and exclude the button.
         // Not confusing at all, right?
-        const messageHTML = messageElement.querySelector('.Msg').firstElementChild.innerHTML;
+        const contentElement = messageElement.querySelector('.Msg').firstElementChild;
 
         // The reply button is stored in the anchor element in the message section in an element with the class
         // .liensMsg.
         const quoteAction = (<HTMLAnchorElement>messageElement.querySelector('.liensMsg a')).href;
 
-        return new ForumMessage(postTime, author, messageHTML, quoteAction);
+        return new ForumMessage(postTime, author, contentElement, quoteAction);
     }
 
     // Extracts the time when the message was posted from its time string.
@@ -116,7 +119,7 @@ export class ForumMessage extends Renderable<null> {
     get contentElement(): HTMLElement {
         const element = new ElementBuilder('div')
             .withStyleClasses('content')
-            .withInnerHTML(this.content)
+            .withChildren(this.content.render())
             .build();
 
         // Shorten if the content exceeds the height limit and the current message has not been expanded.

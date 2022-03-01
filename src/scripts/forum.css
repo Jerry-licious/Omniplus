@@ -54,6 +54,16 @@
     overflow: hidden;
 }
 
+.omniplus-forum-subject .message .card blockquote {
+    /* Block quotes should have a light background and a left border to show that they're block quotes. */
+    background-color: rgba(0, 0, 0, 0.03); /* Using translucent background so nested quotes still stand out. */
+    border-left: rgba(0, 0, 0, 0.1) 4px solid;
+
+    /* Space for text handled by the padding instead as the border already exists. */
+    margin: 0;
+    padding: 8px;
+}
+
 /* Give the expand button the secondary colour so it doesn't look too similar. */
 .omniplus-forum-subject .badged-card .badge-holder .expand {
     --badge-clickable-background: var(--secondary);

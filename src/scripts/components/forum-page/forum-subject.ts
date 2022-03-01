@@ -6,17 +6,24 @@ import {ElementBuilder} from '../dom-builder';
 
 export class ForumSubject extends Renderable<null>{
     messages: ForumMessage[];
+    // The href attached to the reply button for the whole subject.
+    replyAction: string;
+
     expandedAll = false;
     scrolledToBottom = false;
 
-    constructor(messages: ForumMessage[]) {
+    constructor(messages: ForumMessage[], replyAction: string) {
         super('div', 'omniplus-forum-subject', 'omniplus-lea-container');
 
         this.messages = messages;
+        this.replyAction = replyAction;
     }
 
     static loadFromForumPostPage(page: Document): ForumSubject {
-        return new ForumSubject(ForumMessage.loadFromForumPostPage(page));
+        // The reply button is an anchor element in the toolbar.
+        const replyAction = (<HTMLAnchorElement>document.querySelector('.toolbarStrip a')).href;
+
+        return new ForumSubject(ForumMessage.loadFromForumPostPage(page), replyAction);
     }
 
     updateDomElement() {
@@ -24,6 +31,16 @@ export class ForumSubject extends Renderable<null>{
             new ElementBuilder('div')
                 .withStyleClasses('controls')
                 .withChildren(
+                    // Reply to subject button
+                    new ElementBuilder('a')
+                        .withStyleClasses('button', 'primary', 'material-icons')
+                        .withAttribute('title', 'Reply to Subject')
+                        .withAttribute('href', this.replyAction)
+                        // Unfocus after click.
+                        .withEventListener('click', (event) => (<HTMLElement>event.target).blur())
+                        .withText('comment')
+                        .build(),
+                    // Scroll to top/buttom button.
                     new ElementBuilder('a')
                         .withStyleClasses('button', 'primary', 'material-icons')
                         .withEventListener('click', () => {
@@ -42,6 +59,7 @@ export class ForumSubject extends Renderable<null>{
                         .withAttribute('title', this.scrolledToBottom ?
                             'Scroll to Bottom' : 'Scroll to Top')
                         .build(),
+                    // Expand/collapse all button.
                     new ElementBuilder('a')
                         .withStyleClasses('button', 'secondary', 'material-icons')
                         .withEventListener('click', () => {
