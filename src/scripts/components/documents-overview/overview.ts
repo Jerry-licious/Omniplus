@@ -15,15 +15,6 @@ export class LeaDocumentsOverview extends Renderable<OverviewRenderInfo> {
 
     // Injects the container into the document overview page.
     injectToDocumentOverviewPage() {
-        // Lea's stylesheet makes all hovered <a> elements red. Remove the rule if it exists.
-        for (const styleSheet of document.styleSheets) {
-            for (let i = 0; i < styleSheet.cssRules.length; i++) {
-                if (styleSheet.cssRules[i].cssText.includes('a:hover:not(.btn.waves-effect)')) {
-                    styleSheet.deleteRule(i);
-                }
-            }
-        }
-
         // The printer friendly version button blocks the view, not sure why it's there, why it exists, or what's
         // the purpose of printing out an overview like that.
         removePrinterFriendlyButton();

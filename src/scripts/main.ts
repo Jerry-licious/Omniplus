@@ -2,7 +2,7 @@ import {LeaDocumentsOverview} from './components/documents-overview/overview';
 import {LeaDocumentsContainer} from './components/documents-overview/container';
 import {injectOmniplusLogo} from './components/logo-patcher';
 import {injectDocumentsOverviewButtonToLea} from './components/documents-overview/overview-button';
-import {removeAllLineBreaks, removeHeaderImage} from './components/page-patcher';
+import {removeAllLineBreaks, removeHeaderImage, removeLeaAnchorHoverCSSRule} from './components/page-patcher';
 import {ForumMessage} from './components/forum-page/forum-message';
 import {ForumSubject} from './components/forum-page/forum-subject';
 
@@ -17,6 +17,7 @@ window['ForumMessage'] = ForumMessage;
 // If the script is being run on Lea.
 if (window.location.href.includes('ovx.omnivox.ca')) {
     injectDocumentsOverviewButtonToLea();
+    removeLeaAnchorHoverCSSRule();
 
     // If the script is being run on the document overview page.
     if (window.location.href.includes('SommaireDocuments.aspx')) {

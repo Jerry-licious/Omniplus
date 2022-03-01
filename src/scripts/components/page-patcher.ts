@@ -20,3 +20,14 @@ export function removePrinterFriendlyButton() {
         (<HTMLElement>printerFriendlyButton).style.display = 'none';
     }
 }
+
+// Lea's stylesheet makes all hovered <a> elements red. Remove the rule if it exists.
+export function removeLeaAnchorHoverCSSRule() {
+    for (const styleSheet of document.styleSheets) {
+        for (let i = 0; i < styleSheet.cssRules.length; i++) {
+            if (styleSheet.cssRules[i].cssText.includes('a:hover:not(.btn.waves-effect)')) {
+                styleSheet.deleteRule(i);
+            }
+        }
+    }
+}
