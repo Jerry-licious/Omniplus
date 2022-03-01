@@ -61,9 +61,10 @@ body {
     align-items: stretch;
 
     --badge-size: 36px;
-    --badge-background: var(--primary);
-    --badge-background-hovered: var(--primary-dark);
-    --badge-background-focused: var(--primary-darker);
+    --badge-background: var(--dark-grey);
+    --badge-clickable-background: var(--primary);
+    --badge-clickable-background-hovered: var(--primary-dark);
+    --badge-clickable-background-focused: var(--primary-darker);
 }
 
 .omniplus-lea-container .badged-card .badge-holder {
@@ -103,6 +104,7 @@ body {
     /* icon size and colour */
     color: white;
     font-size: calc(var(--badge-size) * 0.67);
+    background-color: var(--badge-background);
 
     text-decoration: none !important;
 }
@@ -111,15 +113,15 @@ body {
 .omniplus-lea-container .badged-card .badge-holder .clickable {
     /* Pointer indicating that the file can be downloaded. */
     cursor: pointer;
-    background-color: var(--badge-background);
+    background-color: var(--badge-clickable-background);
 
     transition-duration: 0.2s;
 }
 .omniplus-lea-container .badged-card .badge-holder .clickable:hover {
-    background-color: var(--badge-background-hovered);
+    background-color: var(--badge-clickable-background-hovered);
 }
 .omniplus-lea-container .badged-card .badge-holder .clickable:focus {
-    background-color: var(--badge-background-focused);
+    background-color: var(--badge-clickable-background-focused);
 }
 
 .omniplus-lea-container .badged-card .card {
