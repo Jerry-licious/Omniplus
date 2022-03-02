@@ -106,7 +106,6 @@ body {
     /* icon size and colour */
     color: white;
     font-size: calc(var(--badge-size) * 0.67);
-    background-color: var(--badge-background);
 
     text-decoration: none !important;
 }
