@@ -1,6 +1,6 @@
-/* Roboto, Roboto Serif, and Roboto Mono */
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&family=Roboto+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap");
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+/* Roboto, Roboto Slab, and Roboto Mono */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 @import "overview.css";
 @import "forum.css";

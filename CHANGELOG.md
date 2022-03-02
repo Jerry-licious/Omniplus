@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+#### Changes
+
+- Used Roboto Slab instead of Roboto Serif as the Serif font for forum posts.
+
+#### Bug Fixes
+
+- Fixed a bug where certain document types don't get their slight colour tint on their icon.
+
 ## [0.3.2] - 2022-03-01
 
 #### Changes

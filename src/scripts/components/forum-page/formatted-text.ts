@@ -106,7 +106,7 @@ export class FormattedText {
             case FontType.SansSerif:
                 return `'Roboto', 'Helvetica', sans-serif`;
             case FontType.Serif:
-                return `'Roboto Serif', 'Times New Roman', serif`;
+                return `'Roboto Slab', 'Times New Roman', serif`;
             case FontType.Monospace:
                 return `'Roboto Mono', monospace`;
         }
