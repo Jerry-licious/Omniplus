@@ -31,3 +31,17 @@ export function removeLeaAnchorHoverCSSRule() {
         }
     }
 }
+
+export function autoLogin() {
+    const usernameElement = document.querySelector('#Identifiant');
+    const passwordElement = document.querySelector('#Password');
+    // If the elements exist and they have been filled.
+    if (usernameElement && passwordElement) {
+        const username = (<HTMLInputElement>usernameElement).value;
+        const password = (<HTMLInputElement>passwordElement).value;
+        if (username && password) {
+            // Click the login button.
+            (<HTMLButtonElement>document.querySelector('.btn.green')).click();
+        }
+    }
+}

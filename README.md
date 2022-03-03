@@ -5,6 +5,7 @@ content differently.
 
 ### Features
 
+- Automatically presses the login button for you if the username and password have already been entered.
 - Completely reworked and redesigned documents overview page.
     - Browse all your documents in one page.
     - Prioritises showing newer and unread documents.

@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.3] - 2022-03-03
+
+#### Features
+
+- Automatically presses the login button for you if the username and password have already been entered.
 
 #### Changes
 
