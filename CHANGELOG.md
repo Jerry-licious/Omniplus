@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.4] - 2022-03-03
+
+#### Bug Fixes
+
+- Fixed a bug where adjacent empty text nodes in forum posts would cause duplicated chunks of text. 
+
 ## [0.3.3] - 2022-03-03
 
 #### Features

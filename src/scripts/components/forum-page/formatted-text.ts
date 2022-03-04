@@ -86,7 +86,6 @@ export class FormattedText {
                         FormattedText.textNode(authorSaid)
                     ])
                 ]));
-
             }
 
             // And copy all the node's children.
@@ -96,7 +95,7 @@ export class FormattedText {
         }
         // If this is a text node.
         else {
-            return FormattedText.textNode((<Text>node).wholeText);
+            return FormattedText.textNode((<Text>node).nodeValue);
         }
     }
 
