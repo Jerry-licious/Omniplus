@@ -5,6 +5,7 @@
 #### Bug Fixes
 
 - Fixed a bug where the script does not properly load YouTube links.
+- Fixed a bug where the marking non-file documents as read does not work.
 
 ## [0.3.4] - 2022-03-03
 

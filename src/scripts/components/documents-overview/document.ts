@@ -216,7 +216,8 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
                 fetch(this.url);
             } else {
                 // Otherwise fetch the first quoted part in the open action to mark the document as read.
-                fetch(this.originalOpenAction.match(LeaDocument.quotationMarksRegex)[0]);
+                // Remove the quotation marks after matching.
+                fetch(this.originalOpenAction.match(LeaDocument.quotationMarksRegex)[0].replaceAll("'", ''));
             }
             // Ignoring the responses of the fetch because the request is only sent to notify the server.
         }
