@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+#### Bug Fixes
+
+- Fixed a bug where the script does not properly load YouTube links.
+
 ## [0.3.4] - 2022-03-03
 
 #### Bug Fixes

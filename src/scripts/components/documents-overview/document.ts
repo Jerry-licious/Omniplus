@@ -153,10 +153,10 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
                 // Video href have the following format:
                 // javascript:VisualiserVideo('VisualiseVideo.aspx?...', false);
                 // The link to the video preview can be obtained by matching for
-                // everything inside the quotation marks, trimming out the quotation
-                // marks, and then adding it to the documentLinkRoot.
+                // everything inside the quotation marks and trimming out the quotation
+                // marks.
                 return new Promise((res, rej) => res(
-                    leaRoot + openActionDecoded.match(this.quotationMarksRegex)[0].replaceAll("'", '')
+                    openActionDecoded.match(this.quotationMarksRegex)[0].replaceAll("'", '')
                     // However, since the tokens and info are exactly the same after
                     // the .aspx, the true download link can simply be obtained by
                     // swapping the 'VisualiseVideo' with 'VisualiseDocument'.
@@ -173,7 +173,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
                     .then((anchor) => (<HTMLAnchorElement>anchor).href)
                     // in the following format:
                     // javascript:OpenCentre('YouTube Link Encoded in URI', ...); Close();
-                    .then((href) => href.match(LeaDocument.quotationMarksRegex)[0].replaceAll("'", ''));
+                    .then((href) => decodeURIComponent(href.match(LeaDocument.quotationMarksRegex)[0].replaceAll("'", '')));
         }
     }
 
