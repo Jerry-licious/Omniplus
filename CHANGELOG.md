@@ -6,6 +6,7 @@
 
 - Fixed a bug where the script does not properly load YouTube links.
 - Fixed a bug where the marking non-file documents as read does not work.
+- Fixed a bug where document titles with unusually long words can overflow the card.
 
 ## [0.3.4] - 2022-03-03
 
