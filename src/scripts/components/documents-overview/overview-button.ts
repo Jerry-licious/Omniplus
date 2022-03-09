@@ -5,7 +5,7 @@ export function injectDocumentsOverviewButtonToLea() {
     // .SousMenuItemMesClasses are the menu options under the Lea menu to the left.
     const summaryAnchorContainer = Array.from(document.querySelectorAll('.SousMenuItemMesClasses'))
         // There are 19 of them without special identifiable features apart from their text content.
-        .find((element) => element.textContent == 'Summary of documents');
+        .find((element) => element.textContent == 'Summary of documents' || element.textContent == 'Sommaire des enseignants');
 
     // Potential fix for the teacher version of the website where the summary may not be present.
     if (summaryAnchorContainer) {
