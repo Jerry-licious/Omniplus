@@ -1,14 +1,14 @@
 import {Renderable} from '../renderable';
-import {LeaCourse} from './course';
+import {DocumentPageCourse} from './document-page-course';
 import {OverviewRenderInfo} from './render-info';
 import {ElementBuilder} from '../dom-builder';
 
 export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
-    courses: LeaCourse[] = [];
+    courses: DocumentPageCourse[] = [];
     // Whether the courses have been loaded or not.
     ready: boolean = false;
 
-    constructor(documents: Promise<LeaCourse[]>) {
+    constructor(documents: Promise<DocumentPageCourse[]>) {
         // Start with the loading class.
         super('div', 'course-list-loading');
 
@@ -28,7 +28,7 @@ export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
 
     // Loads all courses and all documents from the document overview page on Lea.
     static loadFromDocumentOverviewPage(page: Document): LeaDocumentsContainer {
-        const coursePromises: Promise<LeaCourse>[] = [];
+        const coursePromises: Promise<DocumentPageCourse>[] = [];
 
         // Courses are placed within either table row elements with either the itemDataGrid or the
         // .itemDataGridAltern class, which correspond to even and odd-numbered documents.
@@ -36,7 +36,7 @@ export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
             // The link to the course is stored in the <a> element with the class .DisDoc_Sommaire_NomCours.
             const courseLink = (<HTMLAnchorElement>rowElement.querySelector('.DisDoc_Sommaire_NomCours')).href;
             // Await everything together to load faster.
-            coursePromises.push(LeaCourse.loadFromCourseDocumentsURL(courseLink));
+            coursePromises.push(DocumentPageCourse.loadFromCourseDocumentsURL(courseLink));
         });
 
         // Wait for all of them at once.

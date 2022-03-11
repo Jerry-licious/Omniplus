@@ -6,8 +6,8 @@ import {OverviewRenderInfo} from './render-info';
 
 const spaceRegex = new RegExp('\\s');
 
-// Represents a course in Lea.
-export class LeaCourse extends Renderable<OverviewRenderInfo> {
+// Represents a course rendered on the documents overview..
+export class DocumentPageCourse extends Renderable<OverviewRenderInfo> {
     name: string;
     courseCode: string;
     documents: LeaDocument[];
@@ -23,7 +23,7 @@ export class LeaCourse extends Renderable<OverviewRenderInfo> {
     }
 
     // Load a course from its *components* page.
-    static fromDocumentPage(page: Document): LeaCourse {
+    static fromDocumentPage(page: Document): DocumentPageCourse {
         // The course code and course name are placed inside the second line of title on the top of the course
         // components page.
         const courseTitle = (<HTMLElement>page.querySelector('.TitrePageLigne2')).innerText;
@@ -51,12 +51,12 @@ export class LeaCourse extends Renderable<OverviewRenderInfo> {
         // Extract the documents.
         const documents = LeaDocument.loadFromCourseDocumentPage(page);
 
-        return new LeaCourse(courseName, courseCode, documents);
+        return new DocumentPageCourse(courseName, courseCode, documents);
     }
 
     // Extracts a course and its documents from a url to a course components page.
-    static loadFromCourseDocumentsURL(url: string): Promise<LeaCourse> {
-        return fetchDocumentFrom(url).then((parsedDocument) => LeaCourse.fromDocumentPage(parsedDocument));
+    static loadFromCourseDocumentsURL(url: string): Promise<DocumentPageCourse> {
+        return fetchDocumentFrom(url).then((parsedDocument) => DocumentPageCourse.fromDocumentPage(parsedDocument));
     }
 
     // Sorts the documents based on their read-status and their upload date.
