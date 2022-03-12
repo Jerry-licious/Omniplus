@@ -58,7 +58,7 @@ module.exports = {
     },
 
     optimization: {
-        minimize: true
+        minimize: false
     },
 
     devtool: 'cheap-module-source-map',
