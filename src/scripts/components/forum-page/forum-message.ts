@@ -67,12 +67,29 @@ export class ForumMessage extends Renderable<null> {
     static extractMessagePostTime(time: string): Date {
         const tokens = time.split(' ');
         // The time string on forum messages are formatted as follows:
-        // YYYY-MM-DD at HH:MM AM/PM
+        // YYYY-MM-DD at HH:MM AM/PM OR <yesterday/today>
         const dateStringTokens = tokens[0].split('-');
-        const year = parseInt(dateStringTokens[0]);
-        // Months start counting from 0. Subtract 1 from the parsed number.
-        const monthIndex = parseInt(dateStringTokens[1]) - 1;
-        const day = parseInt(dateStringTokens[2]);
+
+        let year, monthIndex, day;
+        if (tokens[0] === 'yesterday') {
+            // Subtract one day to obtain yesterday.
+            const yesterday = new Date(Date.now() - 86400000);
+
+            year = yesterday.getFullYear();
+            monthIndex = yesterday.getMonth();
+            day = yesterday.getDate();
+        } else if (tokens[0] === 'today') {
+            const today = new Date(Date.now());
+
+            year = today.getFullYear();
+            monthIndex = today.getMonth();
+            day = today.getDate();
+        } else {
+            year = parseInt(dateStringTokens[0]);
+            // Months start counting from 0. Subtract 1 from the parsed number.
+            monthIndex = parseInt(dateStringTokens[1]) - 1;
+            day = parseInt(dateStringTokens[2]);
+        }
 
         const timeStringTokens = tokens[2].split(':');
         const isPM = tokens[3] == 'PM';

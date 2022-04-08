@@ -5,6 +5,7 @@
 #### Bug Fixes
 
 - Fixed a bug where the Docs button on Léa does not work.
+- The script now properly understands "yesterday" and "today" on Forum post dates.
 
 ## [0.3.5] - 2022-03-12
 
