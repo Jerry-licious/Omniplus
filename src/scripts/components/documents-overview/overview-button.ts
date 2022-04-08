@@ -2,17 +2,12 @@
 import {ElementBuilder} from '../dom-builder';
 
 export function injectDocumentsOverviewButtonToLea() {
-    // .SousMenuItemMesClasses are the menu options under the Lea menu to the left.
-    const summaryAnchorContainer = Array.from(document.querySelectorAll('.SousMenuItemMesClasses'))
-        // There are 19 of them without special identifiable features apart from their text content.
-        .find((element) => element.textContent == 'Summary of documents' || element.textContent == 'Sommaire des enseignants');
+    // The link to the overview page is stored in the element with the id lienDDLE.
+    const summaryAnchor = document.querySelector('#lienDDLE');
 
     // Potential fix for the teacher version of the website where the summary may not be present.
-    if (summaryAnchorContainer) {
-        // That element is only not present when the user is already on the overview page, so redirecting back to
-        // the current page will do the job.
-        const overviewLink = summaryAnchorContainer ?
-            (<HTMLAnchorElement>summaryAnchorContainer.firstElementChild).href : window.location.href;
+    if (summaryAnchor) {
+        const overviewLink = (<HTMLAnchorElement>summaryAnchor).href;
 
         // All the buttons are contained in this element.
         const buttonsContainer = document.querySelector('#region-raccourcis-services-skytech');
