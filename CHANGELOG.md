@@ -1,6 +1,17 @@
 # Changelog
 
-## Unreleased
+## [0.3.6] - 2022-04-08
+
+Omnivox finally updated and added some quality of life updates to itself. These changes include:
+- You can now click on each category on the Léa menu instead of hovering over each of them and then have the options 
+  show up.
+  - The roll-over menu now has simplified text instead of repeating what's on the option already.
+  - Each option is now identifiable with an ID.
+- Léa Forum now uses relative instead of absolute time when displaying the post time of forum posts that are close 
+  to the current date (yesterday and today).
+
+While I would like to applaud Omnivox for improving their user experience, they did make me work for a bit to adapt 
+to these new changes, so here are the bug fixes:
 
 #### Bug Fixes
 
