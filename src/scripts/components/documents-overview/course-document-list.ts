@@ -1,10 +1,8 @@
 import {LeaDocument} from './document';
-import {fetchDocumentFrom, toTitleCase} from '../../util';
+import {fetchDocumentFrom, extractCourseCodeAndNameFromCourseTitle} from '../../util';
 import {ElementBuilder} from '../dom-builder';
 import {Renderable} from '../renderable';
 import {OverviewRenderInfo} from './render-info';
-
-const spaceRegex = new RegExp('\\s');
 
 // Represents a course rendered on the documents overview..
 export class CourseDocumentList extends Renderable<OverviewRenderInfo> {
@@ -33,25 +31,11 @@ export class CourseDocumentList extends Renderable<OverviewRenderInfo> {
         // off the extra space on the right.
         // Pre-split the course code and names, note that Omnivox sometimes uses non-breaking space instead of
         // regular space, hence the use of the \s regex.
-        const courseCodeAndName = courseTitle.split('section')[0].trim().split(spaceRegex);
-        // The course code and name are separated by a space, the first element is the course code.
-        const courseCode = courseCodeAndName[0];
-        // Since course names may contain spaces, the rest of the elements make up the course.
-        // Convert the whole thing from all caps to title case.
-        const courseName = toTitleCase(courseCodeAndName.slice(1).join(' ')
-            // The course name itself is structured as follows:
-            // [Program] [-] <Course Name>
-            // The program and the dash may not exist, but as an unfortunate Arts and Science student, it bothers me
-            // that it blocks the course name.
-            // Split the course name by '-', pick the last part and trim off the extra space on the left.
-            .split('-')
-            // Meaning to pick the last element here but since there's no implementation of it this will suffice.
-            .reverse()[0].trim());
-
+        const courseCodeAndName = extractCourseCodeAndNameFromCourseTitle(courseTitle);
         // Extract the documents.
         const documents = LeaDocument.loadFromCourseDocumentPage(page);
 
-        return new CourseDocumentList(courseName, courseCode, documents);
+        return new CourseDocumentList(courseCodeAndName[1], courseCodeAndName[0], documents);
     }
 
     // Extracts a course and its documents from a url to a course components page.
