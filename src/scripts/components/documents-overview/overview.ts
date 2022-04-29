@@ -1,4 +1,4 @@
-import {ElementBuilder} from '../rendering/dom-builder';
+import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {LeaDocumentsContainer} from './container';
 import {OverviewRenderInfo} from './render-info';

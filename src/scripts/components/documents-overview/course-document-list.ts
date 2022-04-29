@@ -1,6 +1,6 @@
 import {LeaDocument} from './document';
 import {fetchDocumentFrom, extractCourseCodeAndNameFromCourseTitle} from '../../util';
-import {ElementBuilder} from '../rendering/dom-builder';
+import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
 

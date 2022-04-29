@@ -2,7 +2,7 @@
 import {ForumMessage} from './forum-message';
 import {Renderable} from '../rendering/renderable';
 import {removePrinterFriendlyButton} from '../page-patcher';
-import {ElementBuilder} from '../rendering/dom-builder';
+import {ElementBuilder} from '../rendering/element-builder';
 
 export class ForumSubject extends Renderable<null>{
     messages: ForumMessage[];
