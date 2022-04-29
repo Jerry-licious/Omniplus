@@ -1,6 +1,6 @@
 import {fetchDocumentFrom, getMonthFromShortened, leaRoot, regexEscape} from '../../util';
-import {ElementBuilder} from '../dom-builder';
-import {Renderable} from '../renderable';
+import {ElementBuilder} from '../rendering/dom-builder';
+import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
 import {LeaDocumentType} from './document-type';
 

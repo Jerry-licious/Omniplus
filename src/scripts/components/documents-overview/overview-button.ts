@@ -1,5 +1,5 @@
 // Adds a document overview button to the topleft section on Lea.
-import {ElementBuilder} from '../dom-builder';
+import {ElementBuilder} from '../rendering/dom-builder';
 
 export function injectDocumentsOverviewButtonToLea() {
     // The link to the overview page is stored in the element with the id lienDDLE.

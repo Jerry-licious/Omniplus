@@ -1,8 +1,8 @@
 // Represents a whole forum subject.
 import {ForumMessage} from './forum-message';
-import {Renderable} from '../renderable';
+import {Renderable} from '../rendering/renderable';
 import {removePrinterFriendlyButton} from '../page-patcher';
-import {ElementBuilder} from '../dom-builder';
+import {ElementBuilder} from '../rendering/dom-builder';
 
 export class ForumSubject extends Renderable<null>{
     messages: ForumMessage[];

@@ -1,7 +1,7 @@
-import {Renderable} from '../renderable';
+import {Renderable} from '../rendering/renderable';
 import {CourseDocumentList} from './course-document-list';
 import {OverviewRenderInfo} from './render-info';
-import {ElementBuilder} from '../dom-builder';
+import {ElementBuilder} from '../rendering/dom-builder';
 
 export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
     courses: CourseDocumentList[] = [];

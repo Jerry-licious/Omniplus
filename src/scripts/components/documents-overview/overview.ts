@@ -1,5 +1,5 @@
-import {ElementBuilder} from '../dom-builder';
-import {Renderable} from '../renderable';
+import {ElementBuilder} from '../rendering/dom-builder';
+import {Renderable} from '../rendering/renderable';
 import {LeaDocumentsContainer} from './container';
 import {OverviewRenderInfo} from './render-info';
 import {removePrinterFriendlyButton} from '../page-patcher';

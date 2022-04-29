@@ -1,6 +1,6 @@
 // Represents a message within a forum post.
-import {Renderable} from '../renderable';
-import {ElementBuilder} from '../dom-builder';
+import {Renderable} from '../rendering/renderable';
+import {ElementBuilder} from '../rendering/dom-builder';
 import {FormattedText} from './formatted-text';
 
 export class ForumMessage extends Renderable<null> {
