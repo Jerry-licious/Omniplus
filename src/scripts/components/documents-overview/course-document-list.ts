@@ -25,12 +25,6 @@ export class CourseDocumentList extends Renderable<OverviewRenderInfo> {
         // The course code and course name are placed inside the second line of title on the top of the course
         // components page.
         const courseTitle = (<HTMLElement>page.querySelector('.TitrePageLigne2')).innerText;
-        // The course title has the following format:
-        // <Course Code> <Course Name> section <section number>
-        // To extract the course code and the name, split the title by 'section', pick the first part and then trim
-        // off the extra space on the right.
-        // Pre-split the course code and names, note that Omnivox sometimes uses non-breaking space instead of
-        // regular space, hence the use of the \s regex.
         const courseCodeAndName = extractCourseCodeAndNameFromCourseTitle(courseTitle);
         // Extract the documents.
         const documents = LeaDocument.loadFromCourseDocumentPage(page);
