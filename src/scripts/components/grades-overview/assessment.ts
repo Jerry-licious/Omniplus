@@ -76,7 +76,7 @@ export class Assessment {
     }
 
     // Loads all assessments from a course assessments page.
-    static loadFromCourseAssessmentsPage(page: Document): Assessment[] {
+    static loadAllAssessmentsFromCourseAssessmentPage(page: Document): Assessment[] {
         // All grades are stored in a table with the class .table-notes.
         // Using the bgcolor requirement to select only ones that can contain grade.
         return Array.from(page.querySelectorAll(`.table-notes tr[bgcolor="#EEEEEE"]`))
