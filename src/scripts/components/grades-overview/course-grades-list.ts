@@ -38,7 +38,7 @@ export class CourseGradesList {
             / 100;
     }
 
-    static loadFromCourseAssessmentsPage(page: Document) {
+    static loadFromCourseAssessmentsPage(page: Document): CourseGradesList {
         // The course name and code is stored in an element with the class centrePageLea, which has the following
         // structure:
         // span.centrePageLea
