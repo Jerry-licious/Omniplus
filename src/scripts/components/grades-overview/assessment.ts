@@ -18,9 +18,9 @@ export class Assessment {
 
     // Extracts a grade represented on Lea as a ratio.
     static extractGrade(gradeText: string): number {
-        // Grades have the following format: (grade/total)
-        // Start by removing the parentheses.
-        const gradeAndTotal = gradeText.substring(1, gradeText.length - 1)
+        // Grades have the following format: grade/total, sometimes they are enclosed by parenthesis.
+        // Start by removing the parentheses if they exist.
+        const gradeAndTotal = gradeText.replace(/\(\)/g, '')
             // Then split by slash to break them apart
             .split('/')
             // And parse them into numbers.
@@ -62,10 +62,9 @@ export class Assessment {
         const grade = gradeElement.childNodes.length > 1 ?
             Assessment.extractGrade((<HTMLElement>gradeElement.firstElementChild).innerText) : undefined;
 
-        // If there is an average, there will be more than one element specifying them.
-        const averageElement = <HTMLElement>element.childNodes.item(4);
-        const average = averageElement.childNodes.length > 1 ?
-            Assessment.extractGrade((<HTMLElement>averageElement.firstElementChild).innerText) : undefined;
+        // If there is an average, the grade text will have more than 1 characters.
+        const averageElement = <HTMLElement>(<HTMLElement>element.childNodes.item(4)).firstElementChild;
+        const average = averageElement.innerText.length > 1 ? Assessment.extractGrade(averageElement.innerText) : undefined;
 
         const weightElement = <HTMLElement>element.childNodes.item(5);
         // The weight is displayed first in percentage "Weight%" alongside with the weighted vs. actual grade.
