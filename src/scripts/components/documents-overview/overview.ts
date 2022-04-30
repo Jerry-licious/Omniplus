@@ -35,27 +35,30 @@ export class LeaDocumentsOverview extends Renderable<OverviewRenderInfo> {
 
     updateDomElement() {
         this.domElement.append(
-            new ElementBuilder('div')
-                .withStyleClasses('control-bar')
-                .withChildren(
-                    new ElementBuilder('input')
-                        .withStyleClasses('search-bar')
-                        .withAttribute('type', 'text')
-                        .withAttribute('placeholder', 'Search')
-                        .withEventListener('input', (event) => {
-                            // Call for a rerender on the container whenever the input changes.
-                            // (because the inputs do not need to be rebuilt.)
-                            this.container.render(new OverviewRenderInfo((<HTMLInputElement>event.target).value));
-                        })
-                        .build(),
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['control-bar'],
+                children: [
+                    new ElementBuilder({
+                        tag: 'input',
+                        styleClasses: ['search-bar']
+                    })
+                    .withAttribute('type', 'text')
+                    .withAttribute('placeholder', 'Search')
+                    .withEventListener('input', (event) => {
+                        // Call for a rerender on the container whenever the input changes.
+                        // (because the inputs do not need to be rebuilt.)
+                        this.container.render(new OverviewRenderInfo((<HTMLInputElement>event.target).value));
+                    })
+                    .build(),
                     // Using an anchor so the element unfocuses after the mouse button has been lifted.
                     // Otherwise the focused style will remain active.
-                    new ElementBuilder('a')
-                        .withStyleClasses('button')
-                        .withText('Mark All as Read')
-                        // Add a href so the focus can apply.
-                        .withAttribute('href', '#')
-                        .withEventListener('click', (event) => {
+                    new ElementBuilder({
+                        tag: 'a',
+                        styleClasses: ['button'],
+                        text: 'Mark All as Read',
+                        href: '#',
+                        onclick: (event) => {
                             this.container.markAllDocumentsAsRead();
                             // Call a rerender.
                             this.container.render(new OverviewRenderInfo(
@@ -63,9 +66,10 @@ export class LeaDocumentsOverview extends Renderable<OverviewRenderInfo> {
                                 (<HTMLInputElement>(<HTMLElement>event.target).parentElement.firstElementChild).value));
                             // Unfocus after the click has been processed.
                             (<HTMLElement>event.target).blur();
-                        })
-                        .build()
-                ).build(),
+                        }
+                    }).build()
+                ]
+            }).build(),
             this.container.render(new OverviewRenderInfo(""))
         )
     }

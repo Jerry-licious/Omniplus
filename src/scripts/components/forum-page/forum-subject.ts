@@ -28,22 +28,26 @@ export class ForumSubject extends Renderable<null>{
 
     updateDomElement() {
         this.domElement.append(
-            new ElementBuilder('div')
-                .withStyleClasses('controls')
-                .withChildren(
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['controls'],
+                children: [
                     // Reply to subject button
-                    new ElementBuilder('a')
-                        .withStyleClasses('button', 'primary', 'material-icons')
-                        .withAttribute('title', 'Reply to Subject')
-                        .withAttribute('href', this.replyAction)
-                        // Unfocus after click.
-                        .withEventListener('click', (event) => (<HTMLElement>event.target).blur())
-                        .withText('comment')
-                        .build(),
+                    new ElementBuilder({
+                        tag: 'a',
+                        styleClasses: ['button', 'primary', 'material-icons'],
+                        title: 'Reply to Subject',
+                        href: this.replyAction,
+                        text: 'comment',
+                        onclick: (event) => (<HTMLElement>event.target).blur()
+                    }).build(),
                     // Scroll to top/buttom button.
-                    new ElementBuilder('a')
-                        .withStyleClasses('button', 'primary', 'material-icons')
-                        .withEventListener('click', () => {
+                    new ElementBuilder({
+                        tag: 'a',
+                        styleClasses: ['button', 'primary', 'material-icons'],
+                        text: this.scrolledToBottom ? 'vertical_align_top' : 'vertical_align_bottom',
+                        title: this.scrolledToBottom ? 'Scroll to Bottom' : 'Scroll to Top',
+                        onclick: () => {
                             // Toggle expand all and rerender.
                             this.scrolledToBottom = !this.scrolledToBottom;
 
@@ -54,15 +58,15 @@ export class ForumSubject extends Renderable<null>{
                             }
 
                             this.render();
-                        })
-                        .withText(this.scrolledToBottom ? 'vertical_align_top' : 'vertical_align_bottom')
-                        .withAttribute('title', this.scrolledToBottom ?
-                            'Scroll to Bottom' : 'Scroll to Top')
-                        .build(),
+                        }
+                    }).build(),
                     // Expand/collapse all button.
-                    new ElementBuilder('a')
-                        .withStyleClasses('button', 'secondary', 'material-icons')
-                        .withEventListener('click', () => {
+                    new ElementBuilder({
+                        tag: 'a',
+                        styleClasses: ['button', 'secondary', 'material-icons'],
+                        text: this.expandedAll ? 'expand_less' : 'expand_more',
+                        title: this.expandedAll ? 'Collapse All' : 'Expand All',
+                        onclick: () => {
                             // Toggle expand all and rerender.
                             this.expandedAll = !this.expandedAll;
 
@@ -73,12 +77,10 @@ export class ForumSubject extends Renderable<null>{
                             });
 
                             this.render();
-                        })
-                        .withText(this.expandedAll ? 'expand_less' : 'expand_more')
-                        .withAttribute('title', this.expandedAll ? 'Collapse All' : 'Expand All')
-                        .build()
-                )
-                .build(),
+                        }
+                    }).build()
+                ]
+            }).build(),
             ...this.messages.map((msg) => msg.render())
         );
     }

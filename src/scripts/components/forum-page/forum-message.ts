@@ -22,13 +22,11 @@ export class ForumMessage extends Renderable<null> {
         this.content = FormattedText.fromContentNode(originalContentElement);
         this.quoteAction = quoteAction;
 
-
-        const contentElement = new ElementBuilder('div')
-            .withStyleClasses('content')
-            .withChildren(
-                this.content.render()
-            )
-            .build();
+        const contentElement = new ElementBuilder({
+            tag: 'div',
+            styleClasses: ['content'],
+            children: [this.content.render()]
+        }).build();
 
         // Add the element to the document so the height can be measured.
         document.body.appendChild(contentElement);
@@ -134,75 +132,76 @@ export class ForumMessage extends Renderable<null> {
     }
 
     get contentElement(): HTMLElement {
-        const element = new ElementBuilder('div')
-            .withStyleClasses('content')
-            .withChildren(this.content.render())
-            .build();
-
-        // Shorten if the content exceeds the height limit and the current message has not been expanded.
-        if (!this.expanded && this.contentExceedsHeight) {
-            element.classList.add('shortened');
-        }
-
-        return element;
+        return new ElementBuilder({
+            tag: 'div',
+            // Shorten if the content exceeds the height limit and the current message has not been expanded.
+            styleClasses: ['content', ...(!this.expanded && this.contentExceedsHeight) ? ['shortened'] : []],
+            children: [this.content.render()]
+        }).build();
     }
 
     get expandButton(): HTMLElement {
-        return new ElementBuilder('a')
-            .withStyleClasses('badge', 'material-icons', 'clickable', 'expand')
-            // Unfocus after click.
-            .withEventListener('click', event => (<HTMLAnchorElement>event.target).blur())
-            .withEventListener('click', () => {
+        return new ElementBuilder({
+            tag: 'a',
+            styleClasses: ['badge', 'material-icons', 'clickable', 'expand'],
+            onclick: (event) => {
                 // Invert the state
                 this.expanded = !this.expanded;
-
                 // And call for a rerender.
                 this.render();
-            })
-            // Change icon based on whether the element has been expanded or not.
-            .withText(this.expanded ? 'expand_less' : 'expand_more')
-            .build();
+                // Unfocus after click.
+                (<HTMLAnchorElement>event.target).blur();
+            },
+            text: this.expanded ? 'expand_less' : 'expand_more'
+        }).build();
     }
 
     updateDomElement() {
         this.domElement.append(
-            new ElementBuilder('div')
-                .withStyleClasses('badge-holder')
-                .withChildren(
-                    new ElementBuilder('a')
-                        .withStyleClasses('badge', 'material-icons', 'clickable')
-                        .withAttribute('href', this.quoteAction)
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['badge-holder'],
+                children: [
+                    new ElementBuilder({
+                        tag: 'a',
+                        styleClasses: ['badge', 'material-icons', 'clickable'],
+                        href: this.quoteAction,
                         // Unfocus after click.
-                        .withEventListener('click', event => (<HTMLAnchorElement>event.target).blur())
-                        .withText('format_quote')
-                        .build(),
+                        onclick: event => (<HTMLAnchorElement>event.target).blur(),
+                        text: 'format_quote'
+                    }).build(),
                     // Add the expand button if the content exceeds the height limit.
                     ... this.contentExceedsHeight ? [this.expandButton] : []
-                )
-                .build(),
-            new ElementBuilder('div')
-                .withStyleClasses('card')
-                .withChildren(
-                    new ElementBuilder('div')
-                        .withStyleClasses('header')
-                        .withChildren(
+                ]
+            }).build(),
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['card'],
+                children: [
+                    new ElementBuilder({
+                        tag: 'div',
+                        styleClasses: ['header'],
+                        children: [
                             // Boldface the author name.
-                            new ElementBuilder('b')
-                                .withStyleClasses('author')
-                                .withText(this.author)
-                                .build(),
-                            new ElementBuilder('span')
-                                .withStyleClasses('filler')
-                                .build(),
-                            new ElementBuilder('span')
-                                .withStyleClasses('time')
-                                .withText(this.formattedTime)
-                                .build()
-                        )
-                        .build(),
+                            new ElementBuilder({
+                                tag: 'b',
+                                styleClasses: ['author'],
+                                text: this.author
+                            }).build(),
+                            new ElementBuilder({
+                                tag: 'span',
+                                styleClasses: ['filler']
+                            }).build(),
+                            new ElementBuilder({
+                                tag: 'span',
+                                styleClasses: ['time'],
+                                text: this.formattedTime
+                            }).build()
+                        ]
+                    }).build(),
                     this.contentElement
-                )
-                .build()
+                ]
+            }).build()
         );
     }
 }

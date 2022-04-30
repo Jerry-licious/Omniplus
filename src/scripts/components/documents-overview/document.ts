@@ -1,4 +1,4 @@
-import {fetchDocumentFrom, getMonthFromShortened, leaRoot, regexEscape} from '../../util';
+import {fetchDocumentFrom, getMonthFromShortened, regexEscape} from '../../util';
 import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
@@ -274,71 +274,77 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
     }
 
     updateDomElement(renderInfo: OverviewRenderInfo) {
-        this.domElement.append(new ElementBuilder('div')
-            .withStyleClasses('badged-card', 'document')
-            .withChildren(
-                new ElementBuilder('div')
-                    .withStyleClasses('badge-holder')
-                    .withChildren(
-                        new ElementBuilder('div')
+        this.domElement.append(new ElementBuilder({
+            tag: 'div',
+            styleClasses: ['badged-card', 'document'],
+            children: [
+                new ElementBuilder({
+                    tag: 'div',
+                    styleClasses: ['badge-holder'],
+                    children: [
+                        new ElementBuilder({
+                            tag: 'div',
                             // The first badge represents the type of the document.
-                            .withStyleClasses('badge', 'material-icons', this.documentIconTypeStyleClass)
-                            .withText(this.documentTypeIcon)
-                            .build(),
-                        new ElementBuilder('a')
+                            styleClasses: ['badge', 'material-icons', this.documentIconTypeStyleClass],
+                            text: this.documentTypeIcon
+                        }).build(),
+                        new ElementBuilder({
+                            tag: 'a',
                             // The second badge is the download button for the document.
-                            .withStyleClasses('badge', 'material-icons', 'clickable')
-                            .withText(this.documentActionIcon)
-                            // Open the link in a new tab.
-                            .withAttribute('target', '_blank')
-                            .withAttribute('href', this.url)
-                            .withEventListener('click', (event) => {
+                            styleClasses: ['badge', 'material-icons', 'clickable'],
+                            text: this.documentActionIcon,
+                            href: this.url,
+                            onclick: (event) => {
                                 // Mark the document as read.
                                 this.markAsRead();
                                 // Call for a re-render when the read status has been updated.
                                 this.rerender();
                                 // Unfocus after the click has been processed.
                                 (<HTMLElement>event.target).blur();
-                            })
-                            .build()
-                    )
-                    .build(),
-                new ElementBuilder('div')
-                    .withStyleClasses('card')
-                    .withChildren(
+                            }
+                        })
+                        // Open the link in a new tab.
+                        .withAttribute('target', '_blank').build()
+                    ]
+                }).build(),
+                new ElementBuilder({
+                    tag: 'div',
+                    styleClasses: ['card'],
+                    children: [
                         // Render the date with the title inside another div so the gap from the card do not
                         // separate them.
-                        new ElementBuilder('div')
-                            .withChildren(
+                        new ElementBuilder({
+                            tag: 'div',
+                            children: [
                                 // Document Name
                                 this.renderNameHighlight(renderInfo.search),
                                 // Upload Date
-                                new ElementBuilder('div')
-                                    .withStyleClasses('date')
-                                    .withText(this.formattedDate)
-                                    .build()
-                            ).build(),
+                                new ElementBuilder({
+                                    tag: 'div',
+                                    styleClasses: ['date'],
+                                    text: this.formattedDate
+                                }).build()
+                            ]
+                        }).build(),
                         // Only render the description if there is a description.
-                        ...this.description.length > 0 ? [new ElementBuilder('div')
-                            .withStyleClasses('description')
-                            .withText(this.description)
-                            .build()] : [],
-                    )
-                    .build()
-            )
-            .build()
-        );
+                        ...this.description.length > 0 ? [new ElementBuilder({
+                            tag: 'div',
+                            styleClasses: ['description'],
+                            text: this.description
+                        }).build()] : [],
+                    ]
+                }).build()
+            ]
+        }).build());
     }
 
     // Renders the name of the document in DOM while highlighting the search term.
     renderNameHighlight(search: string): HTMLElement {
-        const titleElement: HTMLElement = new ElementBuilder('div')
-            .withStyleClasses(
-                'name',
-                // Add the bold tag if the document has not been read.
-                ...(this.read ? [] : ['bold'])
-            )
-            .build();
+        const titleElement: HTMLElement = new ElementBuilder({
+            tag: 'div',
+            // Add the bold tag if the document has not been read.
+            styleClasses: ['name', ...this.read ? [] : ['bold']]
+        }).build();
 
         // Save the trouble of building the regex and dealing with 0-length matches here.
         if (search.length > 0) {

@@ -59,11 +59,11 @@ export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
                 .forEach((course) => this.domElement.appendChild(course.render(renderInfo)));
         } else {
             // While the container is loading, insert the loading element.
-            this.domElement.appendChild(new ElementBuilder('div')
-                .withStyleClasses('loading-spinner')
-                .build());
+            this.domElement.appendChild(new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['loading-spinner'],
+            }).build());
         }
-
     }
 
     markAllDocumentsAsRead(): void {

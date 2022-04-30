@@ -61,16 +61,18 @@ export class CourseDocumentList extends Renderable<OverviewRenderInfo> {
 
     updateDomElement(renderInfo: OverviewRenderInfo) {
         this.domElement.append(
-            new ElementBuilder('div')
-                .withStyleClasses('course-name')
-                .withText(this.courseName)
-                .build(),
-            new ElementBuilder('div')
-                .withStyleClasses('documents-list')
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['course-name'],
+                text: this.courseName
+            }).build(),
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['documents-list'],
                 // Filter the documents to show only ones that match.
-                .withChildren(...this.documents.filter((leaDocument) => leaDocument.nameContains(renderInfo.search))
-                    .map((leaDocument) => leaDocument.render(renderInfo)))
-                .build()
+                children: this.documents.filter((leaDocument) => leaDocument.nameContains(renderInfo.search))
+                    .map((leaDocument) => leaDocument.render(renderInfo))
+            }).build()
         );
     }
 

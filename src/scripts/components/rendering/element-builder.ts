@@ -1,14 +1,38 @@
 export class ElementBuilder {
     tag: string;
-    styleClasses: string[] = [];
-    children: Node[] = [];
-    text: string = "";
+    styleClasses: string[];
+    children: Node[];
+    text: string;
+
+    // Href and title are attributes that are used very often, so it is added to the constructor despitr having a
+    // method to modify attributes directly.
+    href: string;
+    title: string;
+
+    // Onclick is a listener that gets used very often, so it is added to the constructor despite having a method
+    // to add event listeners.
+    onclick: EventListener;
+
     attributes: Map<string, string> = new Map<string, string>();
     styleRules: Map<string, string> = new Map<string, string>();
     eventListeners: Map<string, EventListener> = new Map<string, EventListener>();
 
-    constructor(tag: string) {
+    constructor({ tag, styleClasses = [], children = [], text = '', href = '', title = '', onclick }: {
+        tag: string,
+        styleClasses?: string[],
+        children?: Node[],
+        text?: string,
+        href?: string,
+        title?: string,
+        onclick?: EventListener
+    }) {
         this.tag = tag;
+        this.styleClasses = styleClasses;
+        this.children = children;
+        this.text = text;
+        this.href = href;
+        this.title = title;
+        this.onclick = onclick;
     }
 
     withStyleClasses(...classes: string[]): ElementBuilder {
@@ -46,8 +70,17 @@ export class ElementBuilder {
         this.styleClasses.forEach((styleClass) => element.classList.add(styleClass));
         this.children.forEach((child) => element.appendChild(child));
 
-        if (this.text.length > 0) {
+        if (this.text) {
             element.appendChild(document.createTextNode(this.text));
+        }
+        if (this.href) {
+            element.setAttribute('href', this.href);
+        }
+        if (this.title) {
+            element.setAttribute('title', this.title);
+        }
+        if (this.onclick) {
+            element.addEventListener('click', this.onclick);
         }
 
         this.attributes.forEach((value: string, attribute: string) => element.setAttribute(attribute, value));

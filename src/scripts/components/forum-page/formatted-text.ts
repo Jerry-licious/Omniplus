@@ -54,7 +54,7 @@ export class FormattedText {
             // compatibility.
 
             const fontFamilyCSSRule = elementStyle.getPropertyValue('font-family');
-            let fontType = FontType.SansSerif;
+            let fontType: FontType;
             if (sansSerifTypefaces.some((typeface) => fontFamilyCSSRule.includes(typeface))) {
                 fontType = FontType.SansSerif;
             } else if (serifTypefaces.some((typeface) => fontFamilyCSSRule.includes(typeface))) {
@@ -115,10 +115,11 @@ export class FormattedText {
         if (this.isTextNode) {
             return document.createTextNode(this.content);
         } else {
-            return new ElementBuilder(this.tag)
-                .withStyle('font-family', this.fontFamily ? this.fontFamily : 'inherit')
+            return new ElementBuilder({
+                tag: this.tag,
+                children: [...this.children.map((node) => node.render())]
+            }).withStyle('font-family', this.fontFamily ? this.fontFamily : 'inherit')
                 .withStyle('text-decoration', this.additionalTextDecoration ? this.additionalTextDecoration : 'inherit')
-                .withChildren(...this.children.map((node) => node.render()))
                 .build();
         }
     }
