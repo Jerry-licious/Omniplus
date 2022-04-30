@@ -29,14 +29,14 @@ export function getMonthFromShortened(month: string): number {
 const spaceRegex = new RegExp('\\s');
 
 // Extracts the course code and name from the course title, with the following format:
-// <Course Code> <Course Name> section <section number>
+// <Course Code> <Course Name> section/sect. <section number>
 // Returns a tuple of (course code, course name)
 export function extractCourseCodeAndNameFromCourseTitle(courseTitle: string): [string, string] {
-    // To extract the course code and the name, split the title by 'section', pick the first part and then trim
+    // To extract the course code and the name, split the title by 'section/sect.', pick the first part and then trim
     // off the extra space on the right.
     // Pre-split the course code and names, note that Omnivox sometimes uses non-breaking space instead of
     // regular space, hence the use of the \s regex.
-    const courseCodeAndName = courseTitle.split('section')[0].trim().split(spaceRegex);
+    const courseCodeAndName = courseTitle.split(/section|sect\./g)[0].trim().split(spaceRegex);
     // The course code and name are separated by a space, the first element is the course code.
     const courseCode = courseCodeAndName[0];
     // Since course names may contain spaces, the rest of the elements make up the course.
