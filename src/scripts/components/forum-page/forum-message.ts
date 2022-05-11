@@ -131,7 +131,7 @@ export class ForumMessage extends Renderable<null> {
         return `${timeStringParts[0]}:${timeStringParts[1]} ${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[3]}`;
     }
 
-    get contentElement(): HTMLElement {
+    renderContentElement(): HTMLElement {
         return new ElementBuilder({
             tag: 'div',
             // Shorten if the content exceeds the height limit and the current message has not been expanded.
@@ -140,7 +140,7 @@ export class ForumMessage extends Renderable<null> {
         }).build();
     }
 
-    get expandButton(): HTMLElement {
+    renderExpandButton(): HTMLElement {
         return new ElementBuilder({
             tag: 'a',
             styleClasses: ['badge', 'material-icons', 'clickable', 'expand'],
@@ -171,7 +171,7 @@ export class ForumMessage extends Renderable<null> {
                         text: 'format_quote'
                     }).build(),
                     // Add the expand button if the content exceeds the height limit.
-                    ... this.contentExceedsHeight ? [this.expandButton] : []
+                    ... this.contentExceedsHeight ? [this.renderExpandButton()] : []
                 ]
             }).build(),
             new ElementBuilder({
@@ -199,7 +199,7 @@ export class ForumMessage extends Renderable<null> {
                             }).build()
                         ]
                     }).build(),
-                    this.contentElement
+                    this.renderContentElement()
                 ]
             }).build()
         );
