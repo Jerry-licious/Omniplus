@@ -1,5 +1,5 @@
 import {LeaDocument} from './document';
-import {fetchDocumentFrom, extractCourseCodeAndNameFromCourseTitle} from '../../util';
+import {fetchDocumentFrom, extractCourseCodeAndNameFromCourseTitle} from '../../util/util';
 import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';

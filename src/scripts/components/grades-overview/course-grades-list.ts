@@ -1,5 +1,5 @@
 import {Assessment} from './assessment';
-import {extractCourseCodeAndNameFromCourseTitle} from '../../util';
+import {extractCourseCodeAndNameFromCourseTitle} from '../../util/util';
 
 export class CourseGradesList {
     // Basic information about the course.

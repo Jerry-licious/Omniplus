@@ -1,5 +1,5 @@
 import {CourseGradesList} from './course-grades-list';
-import {fetchDocumentFrom} from '../../util';
+import {fetchDocumentFrom} from '../../util/util';
 
 export class LeaGradesOverview {
     courses: CourseGradesList[] = [];

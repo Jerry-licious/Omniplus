@@ -1,4 +1,4 @@
-import {fetchDocumentFrom, getMonthFromShortened, regexEscape} from '../../util';
+import {fetchDocumentFrom, getMonthFromShortened, regexEscape} from '../../util/util';
 import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
