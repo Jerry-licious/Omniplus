@@ -340,7 +340,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
 
     // Renders the name of the document in DOM while highlighting the search term.
     renderNameHighlight(search: string): HTMLElement {
-        const titleElement: HTMLElement = new ElementBuilder({
+        const titleElement: HTMLElement = <HTMLElement>new ElementBuilder({
             tag: 'div',
             // Add the bold tag if the document has not been read.
             styleClasses: ['name', ...this.read ? [] : ['bold']]
