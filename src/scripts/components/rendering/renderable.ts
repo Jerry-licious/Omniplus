@@ -3,7 +3,7 @@
 export abstract class Renderable<T> {
     // A DOM element is attached to the object so the whole tree does not need to be re-rendered or rebuilt when one
     // child element updates.
-    domElement: HTMLElement;
+    domElement: Element;
     lastRenderInfo: T;
 
     constructor(tag: string, ...styleClasses: string[]) {
@@ -18,7 +18,7 @@ export abstract class Renderable<T> {
     }
 
     // Updates the domElement based on the given information and returns it.
-    render(renderInfo?: T): HTMLElement {
+    render(renderInfo?: T): Element {
         this.lastRenderInfo = renderInfo;
 
         this.clearDomElement();
