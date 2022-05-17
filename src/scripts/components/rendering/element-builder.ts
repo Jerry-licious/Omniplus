@@ -1,10 +1,11 @@
 export class ElementBuilder {
     tag: string;
+    namespace: string;
     styleClasses: string[];
     children: Node[];
     text: string;
 
-    // Href and title are attributes that are used very often, so it is added to the constructor despitr having a
+    // Href and title are attributes that are used very often, so it is added to the constructor despite having a
     // method to modify attributes directly.
     href: string;
     title: string;
@@ -17,8 +18,11 @@ export class ElementBuilder {
     styleRules: Map<string, string> = new Map<string, string>();
     eventListeners: Map<string, EventListener> = new Map<string, EventListener>();
 
-    constructor({ tag, styleClasses = [], children = [], text = '', href = '', title = '', onclick }: {
+    // Use HTML as the default namespace.
+    constructor({ tag, namespace = 'http://www.w3.org/1999/xhtml',
+                    styleClasses = [], children = [], text = '', href = '', title = '', onclick }: {
         tag: string,
+        namespace?: string,
         styleClasses?: string[],
         children?: Node[],
         text?: string,
@@ -27,6 +31,7 @@ export class ElementBuilder {
         onclick?: EventListener
     }) {
         this.tag = tag;
+        this.namespace = namespace;
         this.styleClasses = styleClasses;
         this.children = children;
         this.text = text;
@@ -65,8 +70,8 @@ export class ElementBuilder {
         return this;
     }
 
-    build(): HTMLElement {
-        const element = document.createElement(this.tag);
+    build(): Element {
+        const element = document.createElementNS(this.namespace, this.tag);
         this.styleClasses.forEach((styleClass) => element.classList.add(styleClass));
         this.children.forEach((child) => element.appendChild(child));
 
@@ -84,7 +89,10 @@ export class ElementBuilder {
         }
 
         this.attributes.forEach((value: string, attribute: string) => element.setAttribute(attribute, value));
-        this.styleRules.forEach((value: string, rule: string) => element.style.setProperty(rule, value));
+        // Add the style if it is an HTML element.
+        if (element instanceof HTMLElement) {
+            this.styleRules.forEach((value: string, rule: string) => element.style.setProperty(rule, value));
+        }
 
         this.eventListeners.forEach((listener, event) => element.addEventListener(event, listener))
 
