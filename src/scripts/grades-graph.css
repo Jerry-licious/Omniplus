@@ -1,0 +1,38 @@
+svg {
+    /* Placeholder sizing */
+    width: 600px;
+    height: 400px;
+    position: absolute;
+}
+
+svg .label {
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    user-select: none;
+}
+
+svg .heavy-line {
+    stroke: black;
+}
+svg .light-line {
+    stroke: var(--grey-400);
+}
+
+/* Why do they have fill in the first place, aren't they polyLINEs? */
+svg polyline {
+    fill: none;
+}
+
+svg .individual-line {
+    stroke: var(--primary);
+}
+svg .individual-point {
+    fill: var(--primary);
+}
+
+svg .average-line {
+    stroke: var(--grey-600);
+}
+svg .average-point {
+    fill: var(--grey-600);
+}

@@ -1,0 +1,83 @@
+<!-- The size is purely arbitrary and for the ease of calculation. -->
+<!-- The graph will be scaled to the page's size with stylesheets later. -->
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .label {
+            font-family: "Roboto", sans-serif;
+            font-size: 20px;
+        }
+        .heavy {
+            fill: black;
+            stroke: black;
+        }
+        .light {
+            fill: grey;
+            stroke: grey;
+        }
+        .individual {
+            fill: green;
+            stroke: green;
+        }
+        .group {
+            fill: dark-grey;
+            stroke: dark-grey;
+        }
+    </style>
+    <!--  -->
+    <!-- Frame added as visual aid for measuring -->
+    <rect fill="white" stroke-width="1" x="0" y="0"
+          width="600" height="400" stroke="white"/>
+
+    <!-- The background gridlines for the graph. -->
+    <!-- The graph itself will extend from (50, 50) to (570, 350) -->
+    <!-- This means that 25% of the graph is 130 pixels wide and 75 pixels tall -->
+    <!-- This leaves space on the top, left, and bottom for additional labels -->
+    <g>
+        <!-- Axes Lines -->
+        <g>
+            <line x1="0" y1="0" x2="0" y2="0" class="heavy" stroke-width="2"/>
+            <!-- Horizontal axis line -->
+            <!-- The line is slightly wider than the graph to ensure that it covers all the text below it -->
+            <line x1="45" y1="350" x2="575" y2="350" class="heavy" stroke-width="2"/>
+        </g>
+        <!-- Grid Lines -->
+        <g>
+            <!-- 100% line -->
+            <line x1="45" y1="50" x2="575" y2="50" class="light" stroke-width="1"/>
+            <!-- 90% line -->
+            <line x1="45" y1="125" x2="575" y2="125" class="light" stroke-width="1"/>
+            <!-- 80% line -->
+            <line x1="45" y1="200" x2="575" y2="200" class="light" stroke-width="1"/>
+            <!-- 70% line -->
+            <line x1="45" y1="275" x2="575" y2="275" class="light" stroke-width="1"/>
+        </g>
+        <!-- Line Labels -->
+        <g>
+            <!-- Left Labels -->
+            <g>
+                <!-- Use dy to shift the text down and align it to the centre vertically. -->
+                <!-- Use text-anchor="end" to align the text to the right. -->
+                <!-- Move the text to the left by a bit so it isn't too close to the graph -->
+                <text text-anchor="end" dy="0.3em" class="label" x="40" y="50">100</text>
+                <text text-anchor="end" dy="0.3em" class="label" x="40" y="125">90</text>
+                <text text-anchor="end" dy="0.3em" class="label" x="40" y="200">80</text>
+                <text text-anchor="end" dy="0.3em" class="label" x="40" y="275">70</text>
+                <text text-anchor="end" dy="0.3em" class="label" x="40" y="350">60</text>
+            </g>
+            <!-- Bottom Labels -->
+            <g>
+                <!-- Use text-anchor="end" to align the text to the centre. -->
+                <!-- Use dy to push the text down. -->
+                <text text-anchor="middle" dy="1.2em" class="label" x="50" y="350">0</text>
+                <text text-anchor="middle" dy="1.2em" class="label" x="180" y="350">25</text>
+                <text text-anchor="middle" dy="1.2em" class="label" x="310" y="350">50</text>
+                <text text-anchor="middle" dy="1.2em" class="label" x="440" y="350">75</text>
+                <text text-anchor="middle" dy="1.2em" class="label" x="570" y="350">100</text>
+            </g>
+        </g>
+        <!-- The actual graph -->
+        <g>
+            <circle cx="100" cy="100" r="5" class=""/>
+        </g>
+    </g>
+</svg>
