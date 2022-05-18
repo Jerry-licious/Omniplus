@@ -1,38 +1,35 @@
-svg {
+.omniplus-grades-overview svg {
     /* Placeholder sizing */
-    width: 600px;
-    height: 400px;
-    position: absolute;
 }
 
-svg .label {
+.omniplus-grades-overview svg .label {
     font-family: "Roboto", sans-serif;
     font-size: 20px;
     user-select: none;
 }
 
-svg .heavy-line {
+.omniplus-grades-overview svg .heavy-line {
     stroke: black;
 }
-svg .light-line {
+.omniplus-grades-overview svg .light-line {
     stroke: var(--grey-400);
 }
 
 /* Why do they have fill in the first place, aren't they polyLINEs? */
-svg polyline {
+.omniplus-grades-overview svg polyline {
     fill: none;
 }
 
-svg .individual-line {
+.omniplus-grades-overview svg .individual-line {
     stroke: var(--primary);
 }
-svg .individual-point {
+.omniplus-grades-overview svg .individual-point {
     fill: var(--primary);
 }
 
-svg .average-line {
+.omniplus-grades-overview svg .average-line {
     stroke: var(--grey-600);
 }
-svg .average-point {
+.omniplus-grades-overview svg .average-point {
     fill: var(--grey-600);
 }
