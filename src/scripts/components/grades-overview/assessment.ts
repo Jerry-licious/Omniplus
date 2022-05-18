@@ -1,5 +1,9 @@
 // Represents an assessment on Lea.
-export class Assessment {
+import {Renderable} from '../rendering/renderable';
+import {ElementBuilder} from '../rendering/element-builder';
+import {formatGrade} from '../../util/util';
+
+export class Assessment extends Renderable<null> {
     name: string;
     // All number are in decimals (0-1) and *not* in percentage.
     weight: number;
@@ -9,6 +13,9 @@ export class Assessment {
     average?: number;
 
     constructor(name: string, weight: number, counted: boolean, mark?: number, average?: number) {
+        // A grade might be dropped.
+        super('tr', ...counted ? [] : ['dropped']);
+
         this.name = name;
         this.weight = weight;
         this.counted = counted;
@@ -53,9 +60,7 @@ export class Assessment {
         const nameElement = <HTMLElement>element.childNodes.item(2);
         const name = (<HTMLElement>nameElement.firstElementChild).innerText;
 
-        // If the grade is being dropped, there will be more elements in the name element that indicate that the
-        // grade has been dropped.
-        const counted = !(nameElement.childElementCount > 1);
+        const counted = !nameElement.innerText.includes('This mark will be discarded');
 
         const gradeElement = <HTMLElement>element.childNodes.item(3);
         // If there is a grade, there will be more than one element specifying the grade marking and the percent grade.
@@ -92,5 +97,25 @@ export class Assessment {
     }
     get hasAverage(): boolean {
         return this.average != undefined;
+    }
+
+    updateDomElement() {
+        this.domElement.append(
+            new ElementBuilder({
+                tag: 'td', text: this.name
+            }).build(),
+            new ElementBuilder({
+                // The grade always has precision to the ones.
+                tag: 'td', text: this.hasGrade ? formatGrade(this.grade, 0) : '-'
+            }).build(),
+            new ElementBuilder({
+                // The average has precision to the tenths since it's calculated via division.
+                tag: 'td', text: this.hasAverage ? formatGrade(this.average, 1) : '-'
+            }).build(),
+            new ElementBuilder({
+                // The average has precision to the tenths given.
+                tag: 'td', text: formatGrade(this.weight, 1)
+            }).build()
+        )
     }
 }
