@@ -1,7 +1,10 @@
 import {Assessment} from './assessment';
-import {extractCourseCodeAndNameFromCourseTitle} from '../../util/util';
+import {extractCourseCodeAndNameFromCourseTitle, formatGrade} from '../../util/util';
+import {Renderable} from '../rendering/renderable';
+import {ElementBuilder} from '../rendering/element-builder';
+import {GradeProgressionGraph} from './grade-progression-graph';
 
-export class CourseGradesList {
+export class CourseGradesList extends Renderable<null> {
     // Basic information about the course.
     courseName: string;
     courseCode: string;
@@ -14,8 +17,12 @@ export class CourseGradesList {
     classMedian?: number;
     standardDeviation?: number;
 
+    gradeProgressionGraph: GradeProgressionGraph;
+
     constructor(name: string, code: string, assessments: Assessment[], grade: number,
-                average: number, median: number, standardDeviation: number) {
+                average: number, median: number, standardDeviation: number, graph: GradeProgressionGraph) {
+        super('div', 'card', 'course-grades-list');
+
         this.courseName = name;
         this.courseCode = code;
         this.assessments = assessments;
@@ -23,6 +30,7 @@ export class CourseGradesList {
         this.classAverage = average;
         this.classMedian = median;
         this.standardDeviation = standardDeviation;
+        this.gradeProgressionGraph = graph;
     }
 
     // Gives the grade/value, in decimal of an element that has a percentage representation of a grade.
@@ -94,11 +102,31 @@ export class CourseGradesList {
         // The third is always the standard deviation.
         const standardDeviation = classStatistics.length > 2 ? this.extractDecimalFromOverviewPercentageElement(classStatistics[2]) : undefined;
 
-        // Load in the assessments.
-        const assessments = Assessment.loadAllAssessmentsFromCourseAssessmentPage(page);
+        // Load in the assessments. Reverse the order to show the newest first.
+        const assessments = Assessment.loadAllAssessmentsFromCourseAssessmentPage(page).reverse();
+
+        // Put the ones that have been evaluated and counted on the top.
+        assessments.sort((a, b) => {
+            // First show assessments that have personal grades.
+            if (a.hasGrade != b.hasGrade) {
+                return (b.hasGrade ? 1 : 0) - (a.hasGrade ? 1 : 0)
+            }
+            // Then show assessments that are being counted.
+            if (a.counted != b.counted) {
+                return (b.counted ? 1 : 0) - (a.counted ? 1 : 0);
+            }
+            return 0;
+        });
+
+        // Load in the grades graph.
+        const graph = GradeProgressionGraph.loadFromCourseAssessmentsPage(page);
 
         return new CourseGradesList(courseName, courseCode, assessments, currentGrade,
-            classAverage, classMedian, standardDeviation);
+            classAverage, classMedian, standardDeviation, graph);
+    }
+
+    get hasAssessments(): boolean {
+        return this.assessments.length > 0;
     }
 
     get hasAverage(): boolean {
@@ -111,5 +139,113 @@ export class CourseGradesList {
 
     get hasStandardDeviation(): boolean {
         return this.standardDeviation != undefined;
+    }
+
+    get hasZScore(): boolean {
+        return this.hasAverage && this.hasStandardDeviation;
+    }
+    get zScore(): number {
+        return (this.currentGrade - this.classAverage) / this.standardDeviation;
+    }
+
+    updateDomElement(): void {
+        this.domElement.append(
+            new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['title-bar'],
+                children: [
+                    new ElementBuilder({
+                        tag: 'div',
+                        styleClasses: ['course-name'],
+                        text: this.courseName
+                    }).build(),
+                    new ElementBuilder({
+                        tag: 'div',
+                        styleClasses: ['course-grade'],
+                        text: formatGrade(this.currentGrade, 0)
+                    }).build()
+                ]
+            }).build(),
+            // Render the graph if there is any data.
+            ...this.gradeProgressionGraph.hasData ? [this.gradeProgressionGraph.render()] : [],
+            // Render the class stats section if there is any data.
+            ...(this.hasAverage && this.hasMedian && this.hasStandardDeviation) ? [
+                // Divider
+                new ElementBuilder({ tag: 'hr' }).build(),
+                new ElementBuilder({
+                    tag: 'table', styleClasses: ['class-stats'],
+                    children: [
+                        // Include the average if there is an average
+                        ...this.hasAverage ? [new ElementBuilder({
+                            tag: 'tr',
+                            children: [
+                                new ElementBuilder({
+                                    tag: 'td', text: 'Class Average'
+                                }).build(),
+                                new ElementBuilder({
+                                    tag: 'td', text: formatGrade(this.classAverage, 1)
+                                }).build()
+                            ]
+                        }).build()] : [],
+                        // Include the median if there is a median
+                        ...this.hasMedian ? [new ElementBuilder({
+                            tag: 'tr',
+                            children: [
+                                new ElementBuilder({
+                                    tag: 'td', text: 'Median'
+                                }).build(),
+                                new ElementBuilder({
+                                    tag: 'td', text: formatGrade(this.classMedian, 0)
+                                }).build()
+                            ]
+                        }).build()] : [],
+                        // Include the standard deviation if there is a standard deviation
+                        ...this.hasStandardDeviation ? [new ElementBuilder({
+                            tag: 'tr',
+                            children: [
+                                new ElementBuilder({
+                                    tag: 'td', text: 'Standard Deviation'
+                                }).build(),
+                                new ElementBuilder({
+                                    tag: 'td', text: formatGrade(this.standardDeviation, 1)
+                                }).build()
+                            ]
+                        }).build()] : [],
+                        // Include the z-score deviation if it can be calculated
+                        ...this.hasZScore ? [new ElementBuilder({
+                            tag: 'tr',
+                            children: [
+                                new ElementBuilder({
+                                    tag: 'td', text: 'Z-Score'
+                                }).build(),
+                                new ElementBuilder({
+                                    tag: 'td', text: this.zScore.toFixed(2)
+                                }).build()
+                            ]
+                        }).build()] : []
+                    ]
+                }).build()
+            ] : [],
+            // Render the assessment table section if there are any assessments.
+            ...this.hasAssessments ? [
+                // Divider
+                new ElementBuilder({ tag: 'hr' }).build(),
+                new ElementBuilder({
+                    tag: 'table', styleClasses: ['assessments-list'],
+                    children: [
+                        new ElementBuilder({
+                            tag: 'tr',
+                            children: [
+                                new ElementBuilder({ tag: 'th', text: 'Assessment'} ).build(),
+                                new ElementBuilder({ tag: 'th', text: 'Grade'} ).build(),
+                                new ElementBuilder({ tag: 'th', text: 'Average'} ).build(),
+                                new ElementBuilder({ tag: 'th', text: 'Weight'} ).build()
+                            ]
+                        }).build(),
+                        ...this.assessments.map((assessment) => assessment.render())
+                    ]
+                }).build()
+            ] : []
+        );
     }
 }
