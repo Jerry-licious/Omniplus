@@ -1,0 +1,130 @@
+.omniplus-grades-overview {
+    /* Vertical Flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    /* Specify a height for wrapping, each card can extend this height but if it does, a card should not appear right after. */
+    height: 100%;
+    /* Wrap the cards into one page. */
+    flex-wrap: wrap;
+
+    overflow-x: scroll;
+
+    gap: 12px;
+    padding: 12px;
+}
+
+.omniplus-grades-overview .course-grades-list {
+    width: 350px;
+
+    /* Vertical Flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    padding: 8px;
+    /* With the use of dividers, the gaps can be shortened as dividers double the gap sizes. */
+    gap: 0 !important;
+
+    user-select: none;
+}
+
+.omniplus-grades-overview .course-grades-list .title-bar {
+    /* Horizontal Flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    gap: 4px;
+}
+
+.omniplus-grades-overview .course-grades-list .title-bar .course-name {
+    /* Larger, heavier font. */
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 500;
+
+    /* Expand to fill the flexbox. */
+    flex-grow: 1;
+}
+
+.omniplus-grades-overview .course-grades-list .title-bar .course-grade {
+    /* Larger, heavier font */
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 500;
+    color: var(--grey-700);
+
+    /* Make sure it doesn't get squished by the course name */
+    flex-shrink: 0;
+
+    /* Using flexbox to centre-align the text vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.omniplus-grades-overview .course-grades-list .class-stats {
+    font-size: 16px;
+
+    /* Cell spacing */
+    border-collapse: separate;
+    border-spacing: 0 4px;
+}
+
+/* hr elements function as dividers */
+.omniplus-grades-overview .course-grades-list hr {
+    border-top: 1px solid var(--grey-400);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+
+    width: 100%;
+}
+
+.omniplus-grades-overview .course-grades-list .class-stats td:nth-child(2) {
+    text-align: right;
+}
+
+.omniplus-grades-overview .course-grades-list .assessments-list {
+    border-collapse: collapse;
+}
+
+/* Dropped grades have lower opacity. */
+.omniplus-grades-overview .course-grades-list .assessments-list .dropped {
+    opacity: 0.3;
+}
+
+/* Add spacing between cells. */
+.omniplus-grades-overview .course-grades-list .assessments-list th,
+.omniplus-grades-overview .course-grades-list .assessments-list td {
+    padding: 8px;
+}
+
+/* Add a bottom border for every row except the first to function as dividers. */
+.omniplus-grades-overview .course-grades-list .assessments-list tr:nth-child(n + 2) {
+    border-top: 1px solid var(--grey-300);
+}
+
+.omniplus-grades-overview .course-grades-list .assessments-list th:nth-child(1),
+.omniplus-grades-overview .course-grades-list .assessments-list td:nth-child(1) {
+    /* Align to the left for text (assessment name). */
+    text-align: left;
+
+    /* Make sure that the assessment name field is at least 45% wide. */
+    width: 45%;
+}
+
+.omniplus-grades-overview .course-grades-list .assessments-list th:nth-child(n + 2),
+.omniplus-grades-overview .course-grades-list .assessments-list td:nth-child(n + 2) {
+    /* Align to the right for numbers (grade, average, worth) */
+    text-align: right;
+}
+
+.omniplus-grades-overview .course-grades-list .assessments-list td:nth-child(n + 3) {
+    /* The average and the weight have a lighter colour. */
+    color: var(--grey-700);
+}
