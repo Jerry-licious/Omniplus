@@ -9,11 +9,19 @@ import {
     removeLeaAnchorHoverCSSRule
 } from './components/page-patcher';
 import {ForumSubject} from './components/forum-page/forum-subject';
+import {Assessment} from './components/grades-overview/assessment';
+import {LeaGradesOverview} from './components/grades-overview/grades-overview';
+import {CourseGradesList} from './components/grades-overview/course-grades-list';
 
 require('./omniplus.css');
 
 removeHeaderImage();
 injectOmniplusLogo();
+
+// @ts-ignore
+window['Assessment'] = Assessment;
+// @ts-ignore
+window['GradesOverview'] = CourseGradesList;
 
 // If the script is being run on Lea.
 if (window.location.href.includes('ovx.omnivox.ca')) {
@@ -29,7 +37,7 @@ if (window.location.href.includes('ovx.omnivox.ca')) {
         overview.render();
     }
 
-    // If the script is being ran on the class forum.
+    // If the script is being run on the class forum.
     if (window.location.href.includes('ForumClasse.aspx')) {
         // If this is a forum subject page.
         if (window.location.href.includes('a=msg')) {
@@ -37,6 +45,16 @@ if (window.location.href.includes('ovx.omnivox.ca')) {
             subject.injectToForumSubjectPage();
             subject.render();
         }
+    }
+
+    // If the script is being run on the grades overview page.
+    if (window.location.href.includes('ListeEvalCVIR.ovx') &&
+        window.location.href.includes('SOMMAIREEVAL')) {
+        removeAllLineBreaks();
+
+        const overview = LeaGradesOverview.loadFromGradesOverviewPage(document);
+        overview.injectToGradesOverviewPage();
+        overview.render();
     }
 }
 // If the script is being run on Omnivox/MIO
