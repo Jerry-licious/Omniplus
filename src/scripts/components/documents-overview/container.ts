@@ -10,7 +10,7 @@ export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
 
     constructor(documents: Promise<CourseDocumentList[]>) {
         // Start with the loading class.
-        super('div', 'course-list-loading');
+        super('div', 'loading');
 
         // Add the documents asynchronously.
         documents.then((courses) => {
@@ -45,8 +45,8 @@ export class LeaDocumentsContainer extends Renderable<OverviewRenderInfo> {
 
     updateDomElement(renderInfo: OverviewRenderInfo): void {
         if (this.ready) {
-            if (this.domElement.classList.contains('course-list-loading')) {
-                this.domElement.classList.remove('course-list-loading')
+            if (this.domElement.classList.contains('loading')) {
+                this.domElement.classList.remove('loading');
             }
             if (!this.domElement.classList.contains('course-list')) {
                 // Restore the tag after loading is complete.
