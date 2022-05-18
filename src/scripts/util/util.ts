@@ -53,3 +53,8 @@ export function extractCourseCodeAndNameFromCourseTitle(courseTitle: string): [s
 
     return [courseCode, courseName];
 }
+
+// Formats a grade, between 0 and 1 to a percentage, up to a certain precision.
+export function formatGrade(grade: number, precisionDigits: number) {
+    return (grade * 100).toFixed(precisionDigits) + '%';
+}
