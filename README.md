@@ -11,7 +11,13 @@ content differently.
     - Prioritises showing newer and unread documents.
     - Search for documents.
     - A big button to mark all your documents as read!
-- Added a button on Lea for you to quickly access the documents overview page.
+    - Added a button on Lea for you to quickly access the documents overview page.
+- Completely reworked and redesigned the grades overview page.
+  - Browse all your course assessments and grades in one place.
+  - Cleaner, clearer grade progression graphs for every course.
+  - Class stats such as average, median, and standard deviation are now shown near the top to reduce scrolling.
+  - Z-Score for each course calculated automatically.
+  - Newer assessments appear first to reduce scrolling.
 - Cleaner Lea forum posts with bigger text and a modern style.
   - Forum post lengths are capped to reduce scrolling, click on the expand button to read more. 
   - Consistent formatting and font usage are enforced.

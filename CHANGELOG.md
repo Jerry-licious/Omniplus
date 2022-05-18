@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4] - 2022-05-17
+
+#### Features
+
+- Overhauled the grades overview page, now you can see all your grades in one place.
+  - Improved and clearer grade trend graphs.
+  - Your Z-Score is now automatically calculated for each course.
+  - Newer assessments are now shown first in the list to reduce scrolling.
+  - Class stats such as average, median, and standard deviation are now shown near the top to reduce scrolling.
+
+#### Known Issues
+
+- Forum posts shrink in width if they are not longer than one line.
+- Roboto does not understand French.
+
 ## [0.3.6] - 2022-04-08
 
 Omnivox finally updated and added some quality of life updates to itself. These changes include:
