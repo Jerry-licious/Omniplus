@@ -9,8 +9,6 @@
     /* Wrap the cards into one page. */
     flex-wrap: wrap;
 
-    overflow-x: scroll;
-
     gap: 12px;
     padding: 12px;
 }
