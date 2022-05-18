@@ -5,6 +5,7 @@
 @import "documents-overview.css";
 @import "forum.css";
 @import "grades-graph.css";
+@import "grades-overview.css";
 
 /* Define the colours here. */
 /* Source: https://material.io/resources/color/ */
@@ -129,7 +130,7 @@ body {
     background-color: var(--badge-clickable-background-focused);
 }
 
-.omniplus-lea-container .badged-card .card {
+.omniplus-lea-container .card {
     /* The card fills the horizontal content. */
     flex-grow: 1;
     border-radius: 2px;
@@ -146,4 +147,33 @@ body {
 
     /* Added space between title and descriptions. */
     gap: 8px;
+}
+
+.omniplus-lea-container .loading {
+    flex-grow: 1;
+
+    /* Center the animated loader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.omniplus-lea-container .loading .loading-spinner {
+    width: 120px;
+    height: 120px;
+
+    border: 8px solid white;
+    border-top: 8px solid var(--grey-600);
+    border-radius: 50%;
+
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

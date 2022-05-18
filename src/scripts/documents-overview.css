@@ -98,34 +98,6 @@
     scrollbar-color: grey rgba(0, 0, 0, 0);
 }
 
-.omniplus-documents-overview .course-list-loading {
-    flex-grow: 1;
-
-    /* Center the animated loader */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.omniplus-documents-overview .course-list-loading .loading-spinner {
-    width: 120px;
-    height: 120px;
-
-    border: 8px solid white;
-    border-top: 8px solid var(--grey-600);
-    border-radius: 50%;
-
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /* Scrollbar styling for webkit browsers. */
 .omniplus-documents-overview .course-list::-webkit-scrollbar {
     background: none;
