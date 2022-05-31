@@ -1,4 +1,4 @@
-import {fetchDocumentFrom, getMonthFromShortened, regexEscape} from '../../util/util';
+import {fetchDocumentFrom, getMonthIndexFromShortenedName, regexEscape} from '../../util/util';
 import {ElementBuilder} from '../rendering/element-builder';
 import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
@@ -191,7 +191,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
             // Trim out the first 5 characters ('since').
             const words = dateString.substring(5).split(/[\u00A0 \n]/g);
             // Months on Omnivox are presented in their abbreviated form.
-            const month = getMonthFromShortened(words[0]);
+            const month = getMonthIndexFromShortenedName(words[0]);
             // Remove the comma by removing the last character.
             const day = parseInt(words[1].substring(0, words[1].length - 1));
             const year = parseInt(words[2]);
@@ -199,7 +199,7 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
             return new Date(year, month, day);
         } else {
             const words = dateString.split(/[\u00A0 \n]/g);
-            const month = getMonthFromShortened(words[1]);
+            const month = getMonthIndexFromShortenedName(words[1]);
             const day = parseInt(words[2].substring(0, words[2].length - 1));
             const year = parseInt(words[3]);
 

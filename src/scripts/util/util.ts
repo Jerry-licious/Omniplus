@@ -21,8 +21,17 @@ const monthsShortened = [
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
 // Returns the month from its shortened, 3-character representation.
-export function getMonthFromShortened(month: string): number {
+export function getMonthIndexFromShortenedName(month: string): number {
     return monthsShortened.indexOf(month);
+}
+
+const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+]
+// Returns the month from its full name.
+export function getMonthIndexFromName(month: string): number {
+    return months.indexOf(month);
 }
 
 

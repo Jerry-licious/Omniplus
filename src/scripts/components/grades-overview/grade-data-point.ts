@@ -1,5 +1,5 @@
 // Represents a data point on the grade graph.
-import {getMonthFromShortened} from '../../util/util';
+import {getMonthIndexFromShortenedName} from '../../util/util';
 import {GradeProgressionGraph} from './grade-progression-graph';
 
 export class GradeDataPoint {
@@ -43,7 +43,7 @@ export class GradeDataPoint {
         // Remove the comma and split by dash to extract the raw month and day.
         const [monthString, dayString] = monthDayString.replace(',', '').split('-');
         // Extract the full date.
-        const date = new Date(parseInt(yearString), getMonthFromShortened(monthString), parseInt(dayString));
+        const date = new Date(parseInt(yearString), getMonthIndexFromShortenedName(monthString), parseInt(dayString));
 
         return new GradeDataPoint(grade, cumulatedPortionOfFinalGrade, date);
     }
