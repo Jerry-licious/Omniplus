@@ -141,12 +141,12 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
         switch (type) {
             case LeaDocumentType.File:
                 // Files do not need any modifications.
-                return new Promise((resolve, reject) => resolve(openAction));
+                return new Promise((resolve) => resolve(openAction));
             case LeaDocumentType.Link:
                 // Link documents have a href that looks like this:
                 // javascript:CallPageVisualiseDocument('VisualiseDocument.aspx?...');
                 // ValiderLienDocExterne('Link Encoded in URI');
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                     // The link can be extracted by matching for the second string contained in single quotation marks.
                     resolve(openActionDecoded.match(LeaDocument.quotationMarksRegex)[1]
                             // Remove the quotation marks.
@@ -158,7 +158,7 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
                 // The link to the video preview can be obtained by matching for
                 // everything inside the quotation marks and trimming out the quotation
                 // marks.
-                return new Promise((res, rej) => res(
+                return new Promise((resolve) => resolve(
                     openActionDecoded.match(this.quotationMarksRegex)[0].replaceAll("'", '')
                     // However, since the tokens and info are exactly the same after
                     // the .aspx, the true download link can simply be obtained by
@@ -290,7 +290,7 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
                 styleClasses: ['clickable'],
                 icon: this.documentActionIcon,
                 href: this.url,
-                onclick: (event) => {
+                onclick: () => {
                     // Mark the document as read.
                     this.markAsRead();
                     // Call for a re-render when the read status has been updated.
