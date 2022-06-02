@@ -1,9 +1,10 @@
-// Represents a message within a forum post.
-import {Renderable} from '../rendering/renderable';
 import {ElementBuilder} from '../rendering/element-builder';
 import {FormattedText} from './formatted-text';
+import {BadgedCard} from '../rendering/badged-card/badged-card';
+import {Badge} from '../rendering/badged-card/badge';
 
-export class ForumMessage extends Renderable<null> {
+// Represents a message within a forum post.
+export class ForumMessage extends BadgedCard<null> {
     // When the forum is posted.
     postTime: Date;
     author: string;
@@ -15,7 +16,9 @@ export class ForumMessage extends Renderable<null> {
     expanded: boolean = false;
 
     constructor(postTime: Date, author: string, originalContentElement: Element, quoteAction: string) {
-        super('div', 'badged-card', 'message');
+        super({
+            styleClasses: ['message']
+        });
 
         this.postTime = postTime;
         this.author = author;
@@ -140,10 +143,9 @@ export class ForumMessage extends Renderable<null> {
         }).build();
     }
 
-    renderExpandButton(): Element {
-        return new ElementBuilder({
-            tag: 'a',
-            styleClasses: ['badge', 'material-icons', 'clickable', 'expand'],
+    buildExpandButton(): Badge {
+        return new Badge({
+            styleClasses: ['clickable', 'expand'],
             onclick: (event) => {
                 // Invert the state
                 this.expanded = !this.expanded;
@@ -152,56 +154,47 @@ export class ForumMessage extends Renderable<null> {
                 // Unfocus after click.
                 (<HTMLAnchorElement>event.target).blur();
             },
-            text: this.expanded ? 'expand_less' : 'expand_more'
-        }).build();
+            icon: this.expanded ? 'expand_less' : 'expand_more'
+        });
     }
 
-    updateDomElement() {
-        this.domElement.append(
+    buildBadges(): Badge[] {
+        return [
+            // Quote reply badge.
+            new Badge({
+                styleClasses: ['clickable'],
+                href: this.quoteAction,
+                icon: 'format_quote'
+            }),
+            // Add the expand button if the content exceeds the height limit.
+            ... this.contentExceedsHeight ? [this.buildExpandButton()] : []
+        ];
+    }
+
+    buildContent(): Element[] {
+        return [
             new ElementBuilder({
                 tag: 'div',
-                styleClasses: ['badge-holder'],
+                styleClasses: ['header'],
                 children: [
+                    // Boldface the author name.
                     new ElementBuilder({
-                        tag: 'a',
-                        styleClasses: ['badge', 'material-icons', 'clickable'],
-                        href: this.quoteAction,
-                        // Unfocus after click.
-                        onclick: event => (<HTMLAnchorElement>event.target).blur(),
-                        text: 'format_quote'
+                        tag: 'b',
+                        styleClasses: ['author'],
+                        text: this.author
                     }).build(),
-                    // Add the expand button if the content exceeds the height limit.
-                    ... this.contentExceedsHeight ? [this.renderExpandButton()] : []
+                    new ElementBuilder({
+                        tag: 'span',
+                        styleClasses: ['filler']
+                    }).build(),
+                    new ElementBuilder({
+                        tag: 'span',
+                        styleClasses: ['time'],
+                        text: this.formattedTime
+                    }).build()
                 ]
             }).build(),
-            new ElementBuilder({
-                tag: 'div',
-                styleClasses: ['card'],
-                children: [
-                    new ElementBuilder({
-                        tag: 'div',
-                        styleClasses: ['header'],
-                        children: [
-                            // Boldface the author name.
-                            new ElementBuilder({
-                                tag: 'b',
-                                styleClasses: ['author'],
-                                text: this.author
-                            }).build(),
-                            new ElementBuilder({
-                                tag: 'span',
-                                styleClasses: ['filler']
-                            }).build(),
-                            new ElementBuilder({
-                                tag: 'span',
-                                styleClasses: ['time'],
-                                text: this.formattedTime
-                            }).build()
-                        ]
-                    }).build(),
-                    this.renderContentElement()
-                ]
-            }).build()
-        );
+            this.renderContentElement()
+        ];
     }
 }

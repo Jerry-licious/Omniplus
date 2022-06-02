@@ -1,13 +1,12 @@
 import {fetchDocumentFrom, getMonthIndexFromShortenedName, regexEscape} from '../../util/util';
 import {ElementBuilder} from '../rendering/element-builder';
-import {Renderable} from '../rendering/renderable';
 import {OverviewRenderInfo} from './render-info';
 import {LeaDocumentType} from './document-type';
 import {Badge} from '../rendering/badged-card/badge';
 import {BadgedCard} from '../rendering/badged-card/badged-card';
 
 // Represents a components under a course on Lea.
-export class LeaDocument extends Renderable<OverviewRenderInfo> {
+export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
     name: string;
     description: string;
     read: boolean;
@@ -20,7 +19,9 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
 
     constructor(name: string, description: string, read: boolean, uploadDate: Date,
                 originalOpenAction: string, type: LeaDocumentType) {
-        super('div', 'mdl-card', 'mdl-shadow--2dp', 'lea-document');
+        super({
+            styleClasses: ['document']
+        });
 
         this.name = name;
         this.description = description;
@@ -275,54 +276,54 @@ export class LeaDocument extends Renderable<OverviewRenderInfo> {
         return `${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[3]}`;
     }
 
-    updateDomElement(renderInfo: OverviewRenderInfo) {
-        this.domElement.append(new BadgedCard({
-            styleClasses: ['document'],
-            badges: [
-                new Badge({
-                    clickable: false,
-                    // The first badge represents the type of the document.
-                    styleClasses: [this.documentIconTypeStyleClass],
-                    icon: this.documentTypeIcon
-                }),
-                new Badge({
-                    newTab: true,
-                    // Open the link in a new tab.
-                    styleClasses: ['clickable'],
-                    icon: this.documentActionIcon,
-                    href: this.url,
-                    onclick: (event) => {
-                        // Mark the document as read.
-                        this.markAsRead();
-                        // Call for a re-render when the read status has been updated.
-                        this.rerender();
-                    }
-                })
-            ],
-            content: [
-                // Render the date with the title inside another div so the gap from the card do not
-                // separate them.
-                new ElementBuilder({
-                    tag: 'div',
-                    children: [
-                        // Document Name
-                        this.renderNameHighlight(renderInfo.search),
-                        // Upload Date
-                        new ElementBuilder({
-                            tag: 'div',
-                            styleClasses: ['date'],
-                            text: this.formattedDate
-                        }).build()
-                    ]
-                }).build(),
-                // Only render the description if there is a description.
-                ...this.description.length > 0 ? [new ElementBuilder({
-                    tag: 'div',
-                    styleClasses: ['description'],
-                    text: this.description
-                }).build()] : [],
-            ]
-        }).build());
+    buildBadges(renderInfo: OverviewRenderInfo): Badge[] {
+        return [
+            new Badge({
+                clickable: false,
+                // The first badge represents the type of the document.
+                styleClasses: [this.documentIconTypeStyleClass],
+                icon: this.documentTypeIcon
+            }),
+            new Badge({
+                newTab: true,
+                // Open the link in a new tab.
+                styleClasses: ['clickable'],
+                icon: this.documentActionIcon,
+                href: this.url,
+                onclick: (event) => {
+                    // Mark the document as read.
+                    this.markAsRead();
+                    // Call for a re-render when the read status has been updated.
+                    this.rerender();
+                }
+            })
+        ];
+    }
+
+    buildContent(renderInfo: OverviewRenderInfo): Element[] {
+        return [
+            // Render the date with the title inside another div so the gap from the card do not
+            // separate them.
+            new ElementBuilder({
+                tag: 'div',
+                children: [
+                    // Document Name
+                    this.renderNameHighlight(renderInfo.search),
+                    // Upload Date
+                    new ElementBuilder({
+                        tag: 'div',
+                        styleClasses: ['date'],
+                        text: this.formattedDate
+                    }).build()
+                ]
+            }).build(),
+            // Only render the description if there is a description.
+            ...this.description.length > 0 ? [new ElementBuilder({
+                tag: 'div',
+                styleClasses: ['description'],
+                text: this.description
+            }).build()] : []
+        ];
     }
 
     // Renders the name of the document in DOM while highlighting the search term.
