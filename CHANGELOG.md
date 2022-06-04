@@ -6,6 +6,7 @@
 
 - Assignment badges now have better colours.
 - Overdue assignments now have their dates in red.
+- An explanation now shows when assignments are being loaded.
 
 #### Bug Fixes
 

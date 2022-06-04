@@ -233,8 +233,12 @@ This means that it's a better idea to align the badges to the bottom of the card
 
     /* Center the animated loader */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    /* Gap between spinner and explanation */
+    gap: 40px;
 }
 
 .omniplus-lea-container .loading .loading-spinner {
@@ -255,4 +259,13 @@ This means that it's a better idea to align the badges to the bottom of the card
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+.omniplus-lea-container .loading .explanation {
+    font-size: 20px;
+    color: var(--grey-600);
+    text-align: center;
+
+    max-width: 400px;
 }

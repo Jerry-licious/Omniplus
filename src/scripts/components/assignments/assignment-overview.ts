@@ -73,6 +73,12 @@ export class LeaAssignmentOverview extends Renderable<null> {
                     new ElementBuilder({
                         tag: 'div',
                         styleClasses: ['loading-spinner']
+                    }).build(),
+                    new ElementBuilder({
+                        tag: 'div',
+                        styleClasses: ['explanation'],
+                        text: 'Assignments take significantly longer to load because they require two layers of link' +
+                            ' redirects and opening a popup for each assignment.'
                     }).build()
                 ]
             }).build());
