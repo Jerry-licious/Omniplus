@@ -1,0 +1,98 @@
+.omniplus-assignments-overview {
+    /* Vertical flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: stretch;
+
+    gap: 20px;
+
+    user-select: none;
+
+    /* Assignments tend to have longer name and descriptions than documents, their cards will be wider so they don't take up as much space vertically. */
+    --badge-card-width: 400px;
+    --max-section-height: 600px;
+}
+
+.omniplus-assignments-overview .assignment-section {
+    min-width: calc(var(--badge-card-width));
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    /* Vertical flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: stretch;
+}
+
+.omniplus-assignments-overview .assignment-section .content {
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-height: var(--max-section-height);
+
+    /* Vertical flexbox */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.omniplus-assignments-overview .assignment-section .title {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 500;
+
+    padding: 4px;
+}
+
+.omniplus-assignments-overview .assignment {
+    margin: 4px;
+
+    /* Auto-size */
+    height: auto;
+    /* Keep width at 300px */
+    min-width: var(--badge-card-width);
+    width: var(--badge-card-width);
+
+    /* Do not adjust the card's size based on the flexbox. */
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.omniplus-assignments-overview .assignment .card {
+    /* Space between sections in the card */
+    gap: 4px;
+}
+
+.omniplus-assignments-overview .assignment .card .name {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.omniplus-assignments-overview .assignment .card .course-name {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+
+    font-weight: 400;
+}
+
+.omniplus-assignments-overview .assignment .card .date {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.4);
+
+    font-weight: 400;
+}
+
+.omniplus-assignments-overview .assignment .card .description {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+
+    font-weight: 400;
+
+    /* Make sure that the size of each card does not exceed its section */
+    /* Divide by 2 to leave space for the other components. */
+    max-height: calc(var(--max-section-height) / 2);
+    overflow-y: scroll;
+    flex-basis: 100%;
+}
