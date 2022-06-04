@@ -1,5 +1,12 @@
-// The root URL of Lea pages.
-export const leaRoot = 'https://www-mpo-ovx.omnivox.ca/cvir/ddle/';
+// The root URL of the current lea page, without the final part after the slash.
+export function getCurrentLeaRoot(): string {
+    const terms = window.location.href.split('/');
+    // Remove the last element.
+    terms.pop();
+    return terms.join('/');
+}
+
+export const quotationMarksRegex = new RegExp("'.+?'", 'g');
 
 // Fetches and parses a components from the given url.
 export function fetchDocumentFrom(url: string): Promise<Document> {
@@ -16,7 +23,7 @@ export function regexEscape(text: string): string {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
-const monthsShortened = [
+export const monthsShortened = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
@@ -25,7 +32,7 @@ export function getMonthIndexFromShortenedName(month: string): number {
     return monthsShortened.indexOf(month);
 }
 
-const months = [
+export const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ]
@@ -66,4 +73,26 @@ export function extractCourseCodeAndNameFromCourseTitle(courseTitle: string): [s
 // Formats a grade, between 0 and 1 to a percentage, up to a certain precision.
 export function formatGrade(grade: number, precisionDigits: number) {
     return (grade * 100).toFixed(precisionDigits) + '%';
+}
+
+const popupWidth = 700;
+const popupHeight = 780;
+// Mirrors Omnivox's OpenCentre function - opens a window centered at the screen with size 700 by 780.
+export function openCenteredPopup(url: string) {
+    const popupPositionX = Math.round(screen.availWidth / 2 - popupWidth / 2);
+    const popupPositionY = Math.round(screen.availHeight / 2 - popupHeight / 2);
+
+    //screenx=379,screeny=96,left=379,top=96,height=780,width=700,toolbar=no,location=no,
+    // directories=no,status=no,menubar=no,resizable=yes,scrollbars=yes
+    window.open(url, '_blank', `screenx=${popupPositionX},screeny=${popupPositionY},width=${popupWidth},height=${popupHeight},popup=1`)
+}
+
+export const millisecondsInADay = 86400000;
+export const millisecondsInAWeek = millisecondsInADay * 7;
+
+export type Pair<A, B> = [A, B];
+export type Pairs<A, B> = Pair<A, B>[];
+// Zips two arrays. Assumes that they have equal length.
+export function zip<A, B>(a: A[], b: B[]): Pairs<A, B> {
+    return a.map((element, index) => [element, b[index]]);
 }
