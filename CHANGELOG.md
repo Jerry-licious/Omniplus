@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5] - 2022-06-04
+
+#### Features
+
+- Reworked the assignments overview page, now all assignments will be displayed in one page.
+  - Links to instructions and corrections are automatically extracted, so you don't have to open an extra popup window.
+  - Assignments organised in a Kanban style based on your progress.
+
+#### Known Issues
+
+- Loading texts from each assignment page will break all the French characters. This is not at fault of the font and 
+  **I have no way of fixing it**.
+- Forum posts shrink in width if they are not longer than one line.
+
 ## [0.4] - 2022-05-17
 
 #### Features

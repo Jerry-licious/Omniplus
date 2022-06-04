@@ -18,6 +18,9 @@ content differently.
   - Class stats such as average, median, and standard deviation are now shown near the top to reduce scrolling.
   - Z-Score for each course calculated automatically.
   - Newer assessments appear first to reduce scrolling.
+- Reworked the assignments overview page, now all assignments will be displayed in one page.
+  - Links to instructions and corrections are automatically extracted, so you don't have to open an extra popup window.
+  - Assignments organised in a Kanban style based on your progress.
 - Cleaner Lea forum posts with bigger text and a modern style.
   - Forum post lengths are capped to reduce scrolling, click on the expand button to read more. 
   - Consistent formatting and font usage are enforced.
