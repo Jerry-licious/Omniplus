@@ -9,19 +9,14 @@ import {
     removeLeaAnchorHoverCSSRule
 } from './components/page-patcher';
 import {ForumSubject} from './components/forum-page/forum-subject';
-import {Assessment} from './components/grades-overview/assessment';
 import {LeaGradesOverview} from './components/grades-overview/grades-overview';
-import {CourseGradesList} from './components/grades-overview/course-grades-list';
+import {LeaAssignmentOverview} from './components/assignments/assignment-overview';
 
 require('./omniplus.css');
 
 removeHeaderImage();
 injectOmniplusLogo();
 
-// @ts-ignore
-window['Assessment'] = Assessment;
-// @ts-ignore
-window['GradesOverview'] = CourseGradesList;
 
 // If the script is being run on Lea.
 if (window.location.href.includes('ovx.omnivox.ca')) {
@@ -54,6 +49,14 @@ if (window.location.href.includes('ovx.omnivox.ca')) {
 
         const overview = LeaGradesOverview.loadFromGradesOverviewPage(document);
         overview.injectToGradesOverviewPage();
+        overview.render();
+    }
+
+    if (window.location.href.includes('SommaireTravaux.aspx')) {
+        removeAllLineBreaks();
+
+        const overview = LeaAssignmentOverview.loadAllAssignmentsFromAssignmentsSummaryPage(document);
+        overview.injectToAssignmentsOverviewPage();
         overview.render();
     }
 }
