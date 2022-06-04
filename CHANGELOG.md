@@ -11,6 +11,7 @@
 #### Bug Fixes
 
 - Forum posts now have constant width.
+- Corrections now open in a new tab instead of a popup window.
 
 ## [0.5] - 2022-06-04
 

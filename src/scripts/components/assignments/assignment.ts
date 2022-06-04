@@ -254,9 +254,8 @@ export class Assignment extends BadgedCard<null>{
                 return new Badge({
                     icon: 'assignment_returned',
                     styleClasses: ['clickable-secondary'],
-                    onclick: () => {
-                        openCenteredPopup(this.correctionLink);
-                    }
+                    href: this.correctionLink,
+                    newTab: true
                 });
             }
         }
