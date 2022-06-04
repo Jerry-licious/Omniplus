@@ -1,8 +1,12 @@
 import {
-    extractCourseCodeAndNameFromCourseTitle, fetchDocumentFrom, getCurrentLeaRoot,
-    getMonthIndexFromName, getMonthIndexFromShortenedName,
-    millisecondsInADay, monthsShortened,
-    openCenteredPopup, quotationMarksRegex
+    extractCourseCodeAndNameFromCourseTitle,
+    fetchDocumentFrom,
+    getCurrentLeaRoot,
+    getMonthIndexFromShortenedName,
+    millisecondsInADay,
+    monthsShortened,
+    openCenteredPopup,
+    quotationMarksRegex
 } from '../../util/util';
 import {AssignmentStatus} from './assignment-status';
 import {BadgedCard} from '../rendering/badged-card/badged-card';
@@ -198,24 +202,17 @@ export class Assignment extends BadgedCard<null>{
 
     // The instruction badge is the first badge on the right.
     buildInstructionBadge(): Badge {
-        if (this.hasInstructions) {
-            // Return a clickable badge that leads to the instructions if instructions are available.
-            return new Badge({
-                newTab: true,
-                icon: 'info',
-                styleClasses: ['clickable'],
-                href: this.instructionLink
-            });
-        } else {
-            // If no instruction is given, the button will not be interactive, and a tooltip will indicate that no
-            // instructions are attached.
-            return new Badge({
-                clickable: false,
-                icon: 'assignment',
-                styleClasses: ['default'],
-                title: 'No instructions attached.'
-            })
-        }
+        // Return a clickable badge that leads to the instructions if instructions are available.
+        // If no instruction is given, the button will not be interactive, and a tooltip will indicate that no
+        // instructions are attached.
+        return new Badge({
+            clickable: this.hasInstructions,
+            newTab: true,
+            icon: 'info',
+            styleClasses: this.hasInstructions ? ['clickable'] : ['clickable-disabled'],
+            href: this.hasInstructions ? this.instructionLink : '#',
+            title: this.hasInstructions ? '' : 'No Instructions Attached'
+        });
     }
 
     // The action badge represents what can be done with the assignment. While multiple actions are available,
@@ -230,7 +227,7 @@ export class Assignment extends BadgedCard<null>{
                     // Only allow the upload to be clicked if the assignment is going to be submitted on Lea.
                     clickable: this.leaSubmission,
                     icon: this.leaSubmission ? 'file_upload' : 'class',
-                    styleClasses: this.leaSubmission ? ['clickable-secondary'] : ['default'],
+                    styleClasses: this.leaSubmission ? ['clickable-secondary'] : ['clickable-secondary-disabled'],
                     title: this.leaSubmission ? '' : 'In-class Submission',
                     onclick: this.leaSubmission ? () => {
                         openCenteredPopup(this.popupLink);
@@ -245,7 +242,7 @@ export class Assignment extends BadgedCard<null>{
                     // Only allow the upload to be clicked if the assignment is going to be submitted on Lea.
                     clickable: this.leaSubmission,
                     icon: this.leaSubmission ? 'assignment_turned_in' : 'class',
-                    styleClasses: this.leaSubmission ? ['clickable-secondary'] : ['default'],
+                    styleClasses: this.leaSubmission ? ['clickable-secondary'] : ['clickable-secondary-disabled'],
                     title: this.leaSubmission ? '' : 'In-class Submission',
                     onclick: this.leaSubmission ? () => {
                         openCenteredPopup(this.popupLink);
@@ -273,6 +270,11 @@ export class Assignment extends BadgedCard<null>{
             // Just making a new date and set the time to the last second of the day to avoid all the contingencies.
             return new Date(this.dueTime.getFullYear(), this.dueTime.getMonth(), this.dueTime.getDate(), 23, 59, 59);
         }
+    }
+
+    get overdue(): boolean {
+        // An assignment is only overdue if it hasn't been submitted.
+        return this.status == AssignmentStatus.Assigned && Date.now() > this.effectiveDueTime.valueOf();
     }
 
     // Returns the day that the assignment is due without the specified time.
@@ -336,7 +338,8 @@ export class Assignment extends BadgedCard<null>{
                     }).build(),
                     new ElementBuilder({
                         tag: 'div',
-                        styleClasses: ['date'],
+                        // If an assignment is overdue, add an error colour to highlight it.
+                        styleClasses: ['date', ...this.overdue ? ['overdue'] : []],
                         text: this.dueTimeDisplayed
                     }).build(),
                     // Only add the description if it exists.

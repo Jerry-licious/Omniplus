@@ -84,6 +84,10 @@
     font-weight: 400;
 }
 
+.omniplus-assignments-overview .assignment .card .overdue {
+    color: var(--error);
+}
+
 .omniplus-assignments-overview .assignment .card .description {
     font-size: 16px;
     color: rgba(0, 0, 0, 0.6);

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+#### Changes
+
+- Assignment badges now have better colours.
+- Overdue assignments now have their dates in red.
+
 #### Bug Fixes
 
 - Forum posts now have constant width.

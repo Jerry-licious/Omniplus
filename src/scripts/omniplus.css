@@ -13,15 +13,19 @@
 body {
     /* Lea Green */
     --primary: #8bc34a;
+    --primary-opaque: rgba(139, 195, 74, 0.5);
     --primary-light: #bef67a;
     --primary-dark: #5a9216;
     --primary-darker: #255d00;
 
     /* MIO Blue */
     --secondary: #0288d1;
+    --secondary-opaque: rgba(2, 136, 209, 0.5);
     --secondary-light: #5eb8ff;
     --secondary-dark: #005b9f;
     --secondary-darker: #003270;
+
+    --error: #b00020;
 
     /* Dark grey, used to indicate the file document type. */
     --dark-grey: #1b1b1b;
@@ -164,8 +168,6 @@ This means that it's a better idea to align the badges to the bottom of the card
     /* Pointer indicating that the file can be downloaded. */
     cursor: pointer;
     background-color: var(--badge-clickable-background);
-
-    transition-duration: 0.2s;
 }
 .omniplus-lea-container .badged-card .badge-holder .clickable:hover,
 .omniplus-lea-container .badged-card-horizontal .badge-holder .clickable:hover {
@@ -174,6 +176,13 @@ This means that it's a better idea to align the badges to the bottom of the card
 .omniplus-lea-container .badged-card .badge-holder .clickable:focus,
 .omniplus-lea-container .badged-card-horizontal .badge-holder .clickable:focus {
     background-color: var(--badge-clickable-background-focused);
+}
+
+.omniplus-lea-container .badged-card .badge-holder .clickable-disabled,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-disabled {
+    /* Pointer indicating that this cannot be interacted with. */
+    cursor: not-allowed;
+    background-color: var(--primary-opaque);
 }
 
 .omniplus-lea-container .badged-card .badge-holder .clickable-secondary,
@@ -191,6 +200,13 @@ This means that it's a better idea to align the badges to the bottom of the card
 .omniplus-lea-container .badged-card .badge-holder .clickable-secondary:focus,
 .omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-secondary:focus {
     background-color: var(--badge-clickable-secondary-background-focused);
+}
+
+.omniplus-lea-container .badged-card .badge-holder .clickable-secondary-disabled,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-secondary-disabled {
+    /* Pointer indicating that this cannot be interacted with. */
+    cursor: not-allowed;
+    background-color: var(--secondary-opaque);
 }
 
 .omniplus-lea-container .card {
