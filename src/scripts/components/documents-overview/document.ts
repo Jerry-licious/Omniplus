@@ -1,4 +1,4 @@
-import {fetchDocumentFrom, getMonthIndexFromShortenedName, regexEscape} from '../../util/util';
+import {fetchDocumentFrom, getMonthIndexFromShortenedName, quotationMarksRegex, regexEscape} from '../../util/util';
 import {ElementBuilder} from '../rendering/element-builder';
 import {OverviewRenderInfo} from './render-info';
 import {LeaDocumentType} from './document-type';
@@ -132,7 +132,6 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
         return LeaDocumentType.File;
     }
 
-    static quotationMarksRegex = new RegExp("'.+?'", 'g');
     // Extracts the link of the document based on its type. Used to fetch the link and YouTube url for non-files.
     static extractDocumentURL(openAction: string, type: LeaDocumentType): Promise<string> {
         // Decoding the component before matching because SOME browsers decide to encode the quotation
@@ -148,7 +147,7 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
                 // ValiderLienDocExterne('Link Encoded in URI');
                 return new Promise((resolve) => {
                     // The link can be extracted by matching for the second string contained in single quotation marks.
-                    resolve(openActionDecoded.match(LeaDocument.quotationMarksRegex)[1]
+                    resolve(openActionDecoded.match(quotationMarksRegex)[1]
                             // Remove the quotation marks.
                             .replaceAll("'", ''));
                 });
@@ -159,7 +158,7 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
                 // everything inside the quotation marks and trimming out the quotation
                 // marks.
                 return new Promise((resolve) => resolve(
-                    openActionDecoded.match(this.quotationMarksRegex)[0].replaceAll("'", '')
+                    openActionDecoded.match(quotationMarksRegex)[0].replaceAll("'", '')
                     // However, since the tokens and info are exactly the same after
                     // the .aspx, the true download link can simply be obtained by
                     // swapping the 'VisualiseVideo' with 'VisualiseDocument'.
@@ -169,14 +168,14 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
                 // javascript:VisualiserVideo('VisualiseVideo.aspx?...', true);
                 // The link in the script can be extracted by matching for quotation
                 // marks, trimming them out, and then adding to the root link.
-                return fetchDocumentFrom(openActionDecoded.match(this.quotationMarksRegex)[0].replaceAll("'", ''))
+                return fetchDocumentFrom(openActionDecoded.match(quotationMarksRegex)[0].replaceAll("'", ''))
                     // The true YouTube link is stored in the href of the anchor element
                     // with the class .Gen_Btn...
                     .then((document) => document.querySelector('.Gen_Btn'))
                     .then((anchor) => (<HTMLAnchorElement>anchor).href)
                     // in the following format:
                     // javascript:OpenCentre('YouTube Link Encoded in URI', ...); Close();
-                    .then((href) => decodeURIComponent(href.match(LeaDocument.quotationMarksRegex)[0].replaceAll("'", '')));
+                    .then((href) => decodeURIComponent(href.match(quotationMarksRegex)[0].replaceAll("'", '')));
         }
     }
 
@@ -220,7 +219,7 @@ export class LeaDocument extends BadgedCard<OverviewRenderInfo> {
             } else {
                 // Otherwise fetch the first quoted part in the open action to mark the document as read.
                 // Remove the quotation marks after matching.
-                fetch(this.originalOpenAction.match(LeaDocument.quotationMarksRegex)[0].replaceAll("'", ''));
+                fetch(this.originalOpenAction.match(quotationMarksRegex)[0].replaceAll("'", ''));
             }
             // Ignoring the responses of the fetch because the request is only sent to notify the server.
         }
