@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+#### Bug Fixes
+
+- Forum posts now have constant width.
+
 ## [0.5] - 2022-06-04
 
 #### Features
