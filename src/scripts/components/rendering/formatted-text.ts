@@ -1,5 +1,5 @@
-import {FontType} from './font-type';
-import {ElementBuilder} from '../rendering/element-builder';
+import {FontType} from '../forum-page/font-type';
+import {ElementBuilder} from './element-builder';
 
 // List of fonts supported by Omnivox Forum Posts:
 // Sans Serif fonts: Arial, MS Sans Serif, Segoe UI, Tahoma, Verdana

@@ -1,5 +1,5 @@
 import {ElementBuilder} from '../rendering/element-builder';
-import {FormattedText} from './formatted-text';
+import {FormattedText} from '../rendering/formatted-text';
 import {BadgedCard} from '../rendering/badged-card/badged-card';
 import {Badge} from '../rendering/badged-card/badge';
 
