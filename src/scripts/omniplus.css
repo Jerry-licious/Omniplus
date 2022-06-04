@@ -6,6 +6,7 @@
 @import "forum.css";
 @import "grades-graph.css";
 @import "grades-overview.css";
+@import "assignments-overview.css";
 
 /* Define the colours here. */
 /* Source: https://material.io/resources/color/ */
@@ -52,41 +53,48 @@ body {
 
     /* Roboto */
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-}
 
-.omniplus-lea-container .badged-card {
-    /* Horizontal Flexbox */
-    display: flex;
-    /* Reverse the order to put the icons on the right and the card itself on the left.
-     This is done instead of reversing the order of the elements so the card is always
-     above the badges without having to specify indixes. */
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    align-items: stretch;
-
-    /* Prevent long words from overflowing the container. */
-    overflow-wrap: anywhere;
+    --badge-card-width: 300px;
 
     --badge-size: 36px;
     --badge-background: var(--dark-grey);
     --badge-clickable-background: var(--primary);
     --badge-clickable-background-hovered: var(--primary-dark);
     --badge-clickable-background-focused: var(--primary-darker);
+    --badge-clickable-secondary-background: var(--secondary);
+    --badge-clickable-secondary-background-hovered: var(--secondary-dark);
+    --badge-clickable-secondary-background-focused: var(--secondary-darker);
 }
 
-.omniplus-lea-container .badged-card .badge-holder {
+.omniplus-lea-container .badged-card, .omniplus-lea-container .badged-card-horizontal {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    /* Prevent long words from overflowing the container. */
+    overflow-wrap: anywhere;
+}
+
+.omniplus-lea-container .badged-card {
+    /* Reverse horizontal flexbox */
+    /* Reverse the order to put the icons on the right and the card itself on the left.
+     This is done instead of reversing the order of the elements so the card is always
+     above the badges without having to specify indices. */
+    flex-direction: row-reverse;
+}
+
+/* For objects with more badges, excessive badges may stretch the length of the card and leave out empty space.
+This means that it's a better idea to align the badges to the bottom of the cards rather than the right. */
+.omniplus-lea-container .badged-card-horizontal {
+    /* Vertical flexbox. See badged-card comment for reasons to reverse. */
+    flex-direction: column-reverse;
+}
+
+.omniplus-lea-container .badged-card .badge-holder, .omniplus-lea-container .badged-card-horizontal .badge-holder {
     /* Prevent the badges from being squished by the description. */
     flex-shrink: 0;
 
-    width: var(--badge-size);
-    /* Give the badges a bit of space vertically. */
-    /* Also to match the padding of the card's content. */
-    margin-top: 12px;
-    margin-bottom: 12px;
-
-    /* Vertical Flexbox */
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
 
@@ -94,13 +102,30 @@ body {
     gap: 8px;
 }
 
-.omniplus-lea-container .badged-card .badge-holder .badge {
+.omniplus-lea-container .badged-card .badge-holder {
+    width: var(--badge-size);
+    /* Give the badges a bit of space vertically. */
+    /* Also to match the padding of the card's content. */
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    /* Vertical Flexbox */
+    flex-direction: column;
+}
+
+.omniplus-lea-container .badged-card-horizontal .badge-holder {
     height: var(--badge-size);
+    /* Give the badges a bit of space vertically. */
+    /* Also to match the padding of the card's content. */
+    margin-left: 12px;
+    margin-right: 12px;
 
-    /* Rounded corners on top and bottom left. */
-    /* border-radius: 2px 0 0 2px; */
-    border-radius: 0 2px 2px 0;
+    /* Horizontal Flexbox */
+    flex-direction: row;
+}
 
+.omniplus-lea-container .badged-card .badge-holder .badge,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .badge {
     /* Centre-align horizontally */
     text-align: center;
     /* Using flexbox to centre-align vertically */
@@ -115,19 +140,57 @@ body {
     text-decoration: none !important;
 }
 
+.omniplus-lea-container .badged-card .badge-holder .badge {
+    height: var(--badge-size);
 
-.omniplus-lea-container .badged-card .badge-holder .clickable {
+    /* Rounded corners on top and bottom left. */
+    /* border-radius: 2px 0 0 2px; */
+    border-radius: 0 2px 2px 0;
+}
+
+.omniplus-lea-container .badged-card-horizontal .badge-holder .badge {
+    width: var(--badge-size);
+
+    /* Rounded corners on bottom left and right. */
+    border-radius: 0 0 2px 2px;
+}
+
+.omniplus-lea-container .badged-card .badge-holder .default {
+    background-color: var(--dark-grey);
+}
+
+.omniplus-lea-container .badged-card .badge-holder .clickable,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable {
     /* Pointer indicating that the file can be downloaded. */
     cursor: pointer;
     background-color: var(--badge-clickable-background);
 
     transition-duration: 0.2s;
 }
-.omniplus-lea-container .badged-card .badge-holder .clickable:hover {
+.omniplus-lea-container .badged-card .badge-holder .clickable:hover,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable:hover {
     background-color: var(--badge-clickable-background-hovered);
 }
-.omniplus-lea-container .badged-card .badge-holder .clickable:focus {
+.omniplus-lea-container .badged-card .badge-holder .clickable:focus,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable:focus {
     background-color: var(--badge-clickable-background-focused);
+}
+
+.omniplus-lea-container .badged-card .badge-holder .clickable-secondary,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-secondary {
+    /* Pointer indicating that the file can be downloaded. */
+    cursor: pointer;
+    background-color: var(--badge-clickable-secondary-background);
+
+    transition-duration: 0.2s;
+}
+.omniplus-lea-container .badged-card .badge-holder .clickable-secondary:hover,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-secondary:hover {
+    background-color: var(--badge-clickable-secondary-background-hovered);
+}
+.omniplus-lea-container .badged-card .badge-holder .clickable-secondary:focus,
+.omniplus-lea-container .badged-card-horizontal .badge-holder .clickable-secondary:focus {
+    background-color: var(--badge-clickable-secondary-background-focused);
 }
 
 .omniplus-lea-container .card {
